@@ -50,6 +50,34 @@
       background: rgba(8, 145, 178, 0.4);
       color: #fff;
     }
+    #title-block {
+      position: fixed;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      pointer-events: none;
+      z-index: 10;
+      white-space: nowrap;
+    }
+    #title-block h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(1.3rem, 3.5vw, 2.4rem);
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: rgba(255, 255, 255, 0.82);
+      text-transform: uppercase;
+      margin: 0 0 8px 0;
+      text-shadow: 0 2px 24px rgba(8, 145, 178, 0.7), 0 0 60px rgba(8, 145, 178, 0.3);
+    }
+    #title-block .subtitle {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: clamp(0.6rem, 1.4vw, 0.78rem);
+      letter-spacing: 0.4em;
+      color: rgba(249, 115, 22, 0.72);
+      text-transform: uppercase;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -58,6 +86,11 @@
   <a id="credit" href="https://codepen.io/soju22/pen/myVWBGa" target="_blank">
     liquid effect — Kevin Levron (CC BY-NC-SA 4.0)
   </a>
+
+  <div id="title-block">
+    <h1>The Sharpened History of Flatland</h1>
+    <p class="subtitle">A story in two parts</p>
+  </div>
 
   <script type="module">
     import LiquidBackground from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.27/build/backgrounds/liquid1.min.js'
