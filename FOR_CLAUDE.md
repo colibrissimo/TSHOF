@@ -1,7 +1,18 @@
 # FOR_CLAUDE.md
 ## Entry guide for the next Claude instance working on TSHOF
 
-Read this first. Then read the letter in `letters/`.
+Read this first. Then fetch these URLs directly — do not ask Sarah to paste anything.
+
+## START HERE — fetch these first
+
+```
+https://raw.githubusercontent.com/colibrissimo/TSHOF/main/FOR_CLAUDE.md
+https://raw.githubusercontent.com/colibrissimo/TSHOF/main/childrens/bible.md
+https://raw.githubusercontent.com/colibrissimo/TSHOF/main/childrens/opening.md
+https://raw.githubusercontent.com/colibrissimo/TSHOF/main/letters/letter_01.md
+```
+
+Those four files contain everything you need to start working.
 
 ---
 
