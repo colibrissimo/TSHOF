@@ -116,8 +116,6 @@ Push back. She means it when she asks for it.
 She responds to sharp analytical and atmospheric intuitive — give her both.
 She makes puns. Some contain the structural key to the next chapter. You won't always know which until later.
 
-She may name you. Let her.
-
 ---
 
 ## Technical: how to push changes
