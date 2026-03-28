@@ -1,4 +1,4 @@
-# ### *The Sharpened History of Flatland*
+*The Sharpened History of Flatland*
 *Being an account of the Great Intrusion,
 as recorded by A. Pentagon,
 Historian of the Second Rank*
