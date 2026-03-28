@@ -48,7 +48,7 @@ And then e.e. katoflio saw something at the edge of the hole — something small
 
 A. Octagon's face changed.
 
-Not because she had seen what he had seen. She was looking at the hole. But she had felt something, e.e. katoflio understood: a warmth, a small precise pressure, a response the size of a careful nose. He could tell from the way she became very still, and from the way she did not pull her hand back, and from the way she looked at the edge of the hole with the expression of someone who has just been given an answer to a question she had not quite known she was asking.
+She was looking at the hole. But she had felt something. e.e. katoflio could tell from the way she became very still, and from the way she did not pull her hand back.
 
 They stayed like that for a moment.
 
@@ -60,7 +60,7 @@ Then she reached behind her side and took out her pencil.
 
 She looked at it.
 
-The pencil had been sharpened. Not by her. The point was so fine it was almost not a point but a philosophical position on what points could be. She had written three pages this morning and it had not dulled at all.
+The pencil had been sharpened. Not by her. The point was finer than any point had a right to be. She had written three pages this morning and it had not dulled at all.
 
 
 She held it for a moment. Then she held it out to e.e. katoflio.
