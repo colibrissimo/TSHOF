@@ -2,7 +2,7 @@
 
 e.e. katoflio had not slept well.
 
-This was not because of the hole, exactly. It was because of the drawing, which he had put on his desk before going to bed, and which had been there when he woke up, and which was still more eye than he had made it, and which he had wrapped carefully in a page from the back of his notebook before putting it in his pocket, because it seemed wrong to carry it loose.
+This was not because of the hole, exactly. It was because of the drawing. He had put it on his desk before going to bed. It had been there when he woke up, still more eye than he had made it, and he had wrapped it carefully in a page from the back of his notebook before putting it in his pocket, because it seemed wrong to carry it loose.
 
 He needed to tell someone.
 
@@ -15,7 +15,7 @@ He thought about this on his way to the market square, and the answer arrived, a
 A. Octagon.
 
 
-She was outside the Registry, which was where she usually was in the mornings, going over the week's measurements with the kind of attention that made other people feel their own measurements were slightly approximate. She had eight sides and a pencil behind one of them, and she was not, e.e. katoflio had always noticed, the sort of person who looked up before she was ready to.
+She was outside the Registry, which was where she usually was in the mornings, going over the week's measurements with careful attention. She had eight sides and a pencil behind one of them, and she was not, e.e. katoflio had always noticed, the sort of person who looked up before she was ready to.
 
 He waited.
 
@@ -77,4 +77,4 @@ e.e. katoflio took the drawing back. It was still his. That was — he was relie
 
 e.e. katoflio put the drawing back in his pocket.
 
-They walked toward the market square together, which was not something he had imagined, and which felt, in a way he could not have explained to anyone, like the correct next step.
+They walked toward the market square together, which was not something he had imagined, and which felt strange and correct.
