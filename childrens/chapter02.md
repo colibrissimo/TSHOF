@@ -70,8 +70,6 @@ In his notebook, he wrote: *Experiment Two. Object placed: one drawing. Subject:
 
 He stopped writing.
 
-He looked at what he'd written. *Purpose* was not, strictly speaking, a scientific category. Purpose was what you had when you were trying to say something.
-
 He left the line unfinished.
 
 He stepped back.
