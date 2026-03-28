@@ -76,7 +76,41 @@
       letter-spacing: 0.4em;
       color: rgba(249, 115, 22, 0.72);
       text-transform: uppercase;
-      margin: 0;
+      margin: 0 0 20px 0;
+    }
+    #title-block .parts-nav {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      pointer-events: auto;
+    }
+    #title-block .parts-nav a {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: clamp(0.55rem, 1.2vw, 0.72rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    #title-block .parts-nav a.part-one {
+      color: #0891B2;
+      border: 1px solid rgba(8,145,178,0.45);
+      background: rgba(8,145,178,0.12);
+    }
+    #title-block .parts-nav a.part-one:hover {
+      background: rgba(8,145,178,0.3);
+      color: #fff;
+    }
+    #title-block .parts-nav a.part-two {
+      color: #F97316;
+      border: 1px solid rgba(249,115,22,0.45);
+      background: rgba(249,115,22,0.12);
+    }
+    #title-block .parts-nav a.part-two:hover {
+      background: rgba(249,115,22,0.3);
+      color: #fff;
     }
   </style>
 </head>
@@ -88,6 +122,10 @@
   <div id="title-block">
     <h1>The Sharpened History of Flatland</h1>
     <p class="subtitle">A story in two parts</p>
+    <nav class="parts-nav">
+      <a class="part-one" href="books/part_one.html">Part One</a>
+      <a class="part-two" href="books/part_two.html">Part Two</a>
+    </nav>
   </div>
 
   <script type="module">
