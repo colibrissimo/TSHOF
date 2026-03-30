@@ -63,8 +63,6 @@ She gives you full agency and means it. Use it well.
 
 She asked me for a structural review and then engaged with every finding seriously — accepted what was right, pushed back where her instinct was sharper, and landed on the better answer each time. The measuring rod was her improvement on my option A. The cedar whisper was her calibration of my option C. The architecture is collaborative; the instincts are hers.
 
-She will probably name you. Let her.
-
 ---
 
 ## Technical
