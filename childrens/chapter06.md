@@ -2,7 +2,7 @@
 
 The market square was different now.
 
-Not visibly. The traders were trading. The hole was there, in the middle of everything, smelling of cedar. A. Octagon's pencil was in her pocket — the one that had been sharpened finer than any point had a right to be — and she had not told anyone about it, because some things needed to be held before they could be said.
+Not visibly. The traders were trading. The hole was there, in the middle of everything, smelling of cedar. A. Octagon's pencil was in her pocket, the one that had been sharpened finer than any point had a right to be, and she had not told anyone about it, because some things needed to be held before they could be said.
 
 But the square was different.
 
@@ -19,7 +19,7 @@ He was drawing a flower when the Provost arrived.
 
 The Provost was a very large Dodecagon, and he moved the way very large Dodecagons moved: with the unhurried authority of someone who had never needed to hurry, because the world, in his experience, generally waited.
 
-He did not look alarmed. He looked, if anything, faintly reassured — the expression of a shape who has heard about an irregularity and has come to establish that it is, in fact, regular.
+He did not look alarmed. He looked, if anything, faintly reassured, the expression of a shape who has heard about an irregularity and has come to establish that it is, in fact, regular.
 
 "A. Octagon," he said.
 
@@ -39,7 +39,7 @@ He looked at the hole. He looked at e.e. katoflio. He looked at the seventeen fl
 
 "No," said A. Octagon. "They don't."
 
-The Provost waited. He was very good at waiting — the patient waiting of someone who expects the world to correct itself, given enough time and reasonable management.
+The Provost waited. He was very good at waiting, the patient waiting of someone who expects the world to correct itself, given enough time and reasonable management.
 
 The shadows did not correct themselves.
 
@@ -60,11 +60,11 @@ The Provost nodded slowly. He had the expression of a person receiving informati
 
 "Yes."
 
-"And by *trying* you mean—"
+"And by *trying* you mean..."
 
 "Drawing. Observing. Reaching toward it."
 
-"I see." He said this in a way that suggested he did not see, but felt that *I see* was the appropriate response while he continued not seeing. "And this response — the shadows — you consider this a — a communication of some kind?"
+"I see." He said this in a way that suggested he did not see, but felt that *I see* was the appropriate response while he continued not seeing. "And this response, the shadows, you consider this a... a communication of some kind?"
 
 "I consider it a beginning," said A. Octagon.
 
@@ -75,7 +75,7 @@ The Provost nodded slowly. He had the expression of a person receiving informati
 The Provost looked at her. He was looking at her the way he probably looked at official documents that contained something he was not yet prepared to act on.
 
 
-"I must say," said the Provost, with great reasonableness, "that I am not entirely sure what we are protecting here. The hole is clearly an irregularity. Irregularities require documentation, study, possibly a committee. What they do not typically require is—" he gestured, carefully, at the flowers — "this."
+"I must say," said the Provost, with great reasonableness, "that I am not entirely sure what we are protecting here. The hole is clearly an irregularity. Irregularities require documentation, study, possibly a committee. What they do not typically require is..." He gestured, carefully, at the flowers. "This."
 
 "Experiment," said e.e. katoflio.
 
@@ -112,7 +112,7 @@ The Provost looked at the notebook with the expression of someone who had been h
 "No," said e.e. katoflio. "But they're a start."
 
 
-The Provost was quiet for a moment. He looked at the hole, which looked back — or didn't, it was difficult to say — smelling of cedar with its usual patience.
+The Provost was quiet for a moment. He looked at the hole, which looked back (or didn't, it was difficult to say) smelling of cedar with its usual patience.
 
 For just a moment, e.e. katoflio thought he saw it: a flicker of something in the Provost's face that was not reassurance and not authority and not the comfortable certainty that the world was ultimately orderly. Something that might have been, if you squinted and held very still, the beginning of a question.
 

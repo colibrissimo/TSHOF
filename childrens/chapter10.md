@@ -1,92 +1,128 @@
-# Chapter Ten: The Accurate Sentence
+# Chapter Ten: Odilon
 
-The observations were due on Wednesday morning. It was Monday afternoon, and A. Octagon was writing.
+The review panel recessed at eleven o'clock.
 
-e.e. katoflio had come to the Registry because he had told himself he was going to tell her, and then had walked there slowly, and then had stood at the door for longer than was strictly necessary, and was now inside, watching her work.
+A. Octagon came out of the Registry into the corridor, where e.e. katoflio was sitting on the floor with his back against the wall and his notebook open on his knees. He had been waiting for an hour and a quarter. He had written three lines and crossed out two of them.
 
-She had several pages in front of her, ordered with the precision of someone who has spent a long time with evidence and knows how to treat it. She was holding her pencil — the sharpened pencil, still finer than any point had a right to be — and she was looking at the page rather than writing on it, in the particular way of someone choosing a word.
+She looked at him. He looked at her.
 
-She had not appeared surprised to see him. She had simply said: "Sit down," which he had done, and then returned to the page.
+"Well?" he said.
 
-He sat. He watched her work. He thought about Tuesday.
+"Pending further classification," said A. Octagon.
 
-The difficulty was that Tuesday, once spoken aloud, would no longer belong entirely to him. He had been carrying it for four days in the private space between the notebook's last line and the next one.
+"That's what they said?"
 
-He was aware, sitting there, that once said aloud, Tuesday would not be reversible.
+"That is what they said."
 
-A. Octagon looked up.
+e.e. katoflio closed his notebook. He stood up. He was aware, in the way that bodies are occasionally aware of things that minds have been too occupied to notice, that he had not eaten anything since early morning and was now quite hungry.
 
-"You came back on Tuesday," she said. Not a question.
+He did not say this.
 
-"Yes," said e.e. katoflio.
-
-She waited. She was good at waiting — not A. Rhombus's waiting, which was the performance of patience, but the quiet kind that simply made room.
+They walked toward the market square without discussing it, in the way that people walk somewhere when the destination has already been decided by something other than conversation.
 
 
-e.e. katoflio looked at the window.
+The square was busier than Wednesday morning. The traders were present, the ordinary noise of Flatland commerce filling the air, and in the middle of it all the cordon stood with its neat rope and its four posts and its measuring rod, looking, as it always did without witnesses, faintly theatrical.
 
-"I didn't set up flowers," he said. "I didn't try to repeat the method. I just — I had the drawing. The one of myself. I placed it near the hole." He paused. "Outside the rope."
+The cedar smell was there.
 
-A. Octagon said nothing. He understood this as permission to continue.
+e.e. katoflio stood at the edge of the rope and felt it, the quality of the air that was not quite air, the patience of it, the sense of something present on the other side that was not waiting the way you wait for something to begin, but waiting the way weather waits, which requires nothing and ends when it ends.
 
-"The cedar smell changed. Not toward the hole. Toward me. Toward the drawing, I think, but — toward where I was." He stopped. He had rehearsed this more than he had intended and was aware that rehearsal was not the same as accuracy. "There was warmth. Near my hand. Not from the sun."
+He looked at the hole.
 
-"How long did it stay?" said A. Octagon.
+A. Octagon stood beside him.
 
-"I'm not sure. I didn't look at the time." He had not looked at the time because it had not seemed like the kind of thing that should be measured in that moment. "A while."
+"The panel said pending classification," he said. Not a question this time.
 
-A. Octagon wrote something in the margin of the page.
+"Yes."
 
-"And then?" she said.
+"And your observations."
 
-e.e. katoflio looked at the table.
+"Are on record," said A. Octagon. "Accurately."
 
-"In the notebook," he said, "I wrote: *He came because he wanted to.*" He paused. "I crossed out *He* and wrote *It*, and then crossed that out and wrote *He* again."
+He thought about that. He thought about *The approach was not toward the phenomenon. It was toward the child.* He thought about Tuesday, which was no longer entirely his but was not, for that, gone. He thought about the drawing in his pocket, still there, the small Isosceles with the notebook tucked under one angle.
 
-A very small silence.
+He looked at the rope.
 
-"Because *He* was accurate," said A. Octagon.
-
-"Yes," said e.e. katoflio.
+Then he stepped over it.
 
 
-A. Octagon set down her pencil. She looked at the page in front of her for a moment.
+Not defiantly. Not even particularly dramatically. He simply put one foot over the rope and then the other, and stood inside the cordon next to the hole, in the cedar smell, in the ordinary market square of Flatland on a Wednesday morning with the review pending and the panel recessed and the world going about its business around him.
 
-"You understand," she said, "what that requires me to write."
+A. Octagon did not stop him.
 
-It was not a question. But e.e. katoflio understood that it was something she needed to say aloud, in order to know whether she could bear to hear herself say it.
+The cedar smell changed in the way it changed, not stronger, but present in a new way, the way a room changes when someone in it has turned to look at you. And then something happened that was different from all the times before: not warmth arriving at his hand, not the smell moving toward the drawing, not a sense at the limit of the light.
 
-"Yes," he said.
+Odilon was simply there.
 
-She picked up her pencil. She was quiet for a long time.
+Not fully visible. Not described by the air or the light in any way that could go in a notebook. But there, on his side of the hole, closer than e.e. had ever known him to be, and still, and attending, in the manner of a creature that has crossed a distance and arrived and is now quietly present in the place it intended to reach.
 
-"The accurate sentence," she said, mostly to herself, "is the one the review will find most difficult to hold." She paused. "That does not make it less accurate."
+e.e. katoflio did not move.
 
-She began to write.
+He was aware of: the cedar smell, the warmth near his hand, the small precise weight of a presence that was careful and curious and (he could not have said how he knew this, but he did) thinking, somewhere in the depths of its attention, about lunch.
 
-e.e. katoflio watched her. He could not see the exact words from where he was sitting, but he could see the quality of the writing — careful, unhurried, each word placed as though it were being measured before it was allowed to stay. The sharpened pencil moved across the page without scratching. Whatever she wrote, she wrote it properly.
-
-He had known she would. That was not the question. The question had been whether he would be able to sit still and watch her carry the weight of it, and he found that he could.
-
-She wrote for a while. Then she stopped and looked at what she had written.
+He almost laughed. He did not laugh. But the almost was there, and it was the right almost, the kind that keeps impossible things from becoming solemn.
 
 
-"It will attract attention," said e.e. katoflio. He was not sure whether this was a question.
+He crouched down. He took the drawing from his pocket, the small Isosceles, roughly correct, and placed it on the ground between them.
 
-"Yes," said A. Octagon.
+The presence regarded it. Or regarded him. Or both. He could not tell the difference, and had come to believe this was correct.
 
-"Is there another way to write it?"
+"Hello," said e.e. katoflio.
 
-She looked at him then — the same look she had given him in the market square, the first time, after he had shown her the drawing: not explanation, not patience, not the particular reassurance adults offered when they were about to say something was probably fine. Just recognition.
+He had not planned to say it. It was not in any notebook. It was simply the accurate word for what was happening, and he had promised himself, when he started the notebook, that he would use accurate words.
 
-"There is always another way to write something," she said. "That is precisely the problem."
+The warmth near his hand was very still.
 
-She turned back to the page. She wrote one more line. Then she gathered the pages together, aligned them with the same care she brought to measurements, and set them aside.
+Then, from behind him, he heard footsteps.
 
-"Wednesday morning," she said. "Through proper channels."
+He did not turn around immediately. He stayed where he was, crouched inside the cordon, in the cedar smell, in the quality of a presence that had come here on purpose, and he waited to hear what would happen next.
 
-e.e. katoflio stood. He looked at the pages on the desk — he could not read the observation from this angle, but he could see where the line he had told her had been written, and where her pencil had continued after.
+What happened next was silence.
 
-He had come here with Tuesday inside him, entirely his. He was leaving without it.
+He turned. The Provost was standing at the rope. He had his notebook in one hand. He was looking at e.e. katoflio, and at the drawing on the ground, and at the hole, and at whatever quality of the air communicated itself to large Dodecagons who had already, once, failed to complete a sentence in their own notebooks.
 
-He found, standing at the door of A. Octagon's rooms on a Monday afternoon, that this was not the same as losing it.
+The Provost did not step over the rope.
+
+But he did not speak. He did not say *irregularity* or *procedure* or *proper channels.* He stood at the boundary of the cordon with his notebook in his hand and he was quiet, and his quiet was the quietest thing e.e. katoflio had seen him do.
+
+
+Then A. Octagon stepped over the rope.
+
+She did it the same way e.e. had done it: without drama, without announcement, with the particular quality of someone for whom this was the accurate next thing. She stood inside the cordon and looked at the hole and looked at e.e. and looked at the drawing on the ground between them.
+
+"What is his name?" she said.
+
+e.e. katoflio had not known, until she asked, that he knew. But he did. He had known since Tuesday, or before Tuesday, or since the drawing came back with the wobble at the upper left finished but not corrected. He had known since the cedar smell first arrived in the market square on a day that was otherwise entirely ordinary.
+
+"Odilon," he said.
+
+A. Octagon received this the way she received exact measurements: without surprise, with full attention.
+
+The cedar smell settled around them. The warmth remained, patient as it always was, making no further demand than presence.
+
+"Odilon," said A. Octagon, once, as though entering it into a record that was truer than the official one.
+
+Behind them, at the rope, the Provost said nothing. He put his notebook away.
+
+
+They stood there for a while, the three of them: the child, and the adult who had been brave in the right way, and Odilon, who had come back because he wanted to and was now, in some manner that none of them could have explained to the review panel, here.
+
+The traders traded. A. Rhombus was somewhere at the far end of the square, measuring something with an expression of great satisfaction, entirely unaware.
+
+e.e. katoflio thought, briefly, that he was very hungry.
+
+He stayed anyway.
+
+He picked up the drawing. He put it in his pocket. He took out his notebook.
+
+He wrote: *Day 13. Odilon.*
+
+He looked at this for a moment.
+
+Then he wrote: *Hello.*
+
+He closed the notebook. He stood in the cedar smell, in the square that was no longer merely a square, beside A. Octagon, who was no longer merely a witness, and Odilon, who had been careful, who had been patient, who had come back because he wanted to, who was even now, somewhere in the architecture of his attention, thinking about lunch, was present.
+
+Not passing through.
+
+Present.

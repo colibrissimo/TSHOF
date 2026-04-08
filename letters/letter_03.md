@@ -111,8 +111,6 @@ She asked this session whether saving tokens would help by pushing directly to G
 
 She compared the book to Pärt. Tintinnabuli. One held note, everything resolving around it. Cedar as the tonic, the between-spaces as the resonance. This is the most accurate description of what the book is doing. Keep it in mind when the prose starts to drift toward complexity.
 
-She has strong opinions about pizza. Anchovy and caper is correct. Pineapple is the problem of a topping that can't commit.
-
 ---
 
 ## Technical

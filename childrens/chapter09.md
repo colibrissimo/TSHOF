@@ -1,77 +1,94 @@
-# Chapter Nine: Tuesday
+# Chapter Nine: The Drawer That Would Not Close
 
-Tuesday arrived the way e.e. katoflio had known it would: ordinary, unhurried, entirely indifferent to the weight he had given it.
+The Provost came to the square on Wednesday morning, before the review panel convened.
 
-He was at the square before the traders had finished setting up. He had his notebook and his pencil. He had the drawing in his pocket — the small Isosceles, roughly correct — and he had the particular steadiness of someone who has already decided and does not need to decide again.
+He had not planned to come. He had, in fact, planned to proceed directly to the Registry, where the panel would meet at nine o'clock, where A. Octagon's observations would be reviewed, where the appropriate committee would produce the appropriate framework and the irregularity would begin its formal progress toward resolution. That had been the plan.
 
-The rope was still there. The cordon, the posts, the measuring rod at its precise angle. The hole was inside it, smelling of cedar, looking like a hole.
+He had come to the square instead.
 
-e.e. katoflio did not go inside the rope.
+He told himself, as he crossed the market, that he was conducting a final independent verification. This was true in the sense that he was indeed a Provost, and he was indeed independently present, and verification was indeed something Provosts did. It was less true in another sense, which he did not examine.
 
-He sat down outside it, at the nearest point the rope allowed, in approximately the place he had sat on the other Thursday. Close enough. He opened his notebook and wrote:
+The square was quiet. The traders had not yet arrived.
 
-*Day 11. Tuesday. Window.*
+The rope was still there. The posts. The Provost's own apparatus, all of it: he had ordered every piece of it personally. He stood and looked at it, and thought, very briefly, in a part of his mind he did not usually consult, that it looked faintly theatrical without anyone watching.
 
-He looked at this for a moment.
+He filed this thought under nothing, because there was no category for it.
 
-He did not write anything else.
+The measuring rod was leaning at its precise angle. He looked at it the way he looked at instruments generally, with the brief satisfaction of a shape who trusts his equipment.
 
+Then he looked at it again. The point was finer than he remembered. Sharper. He had not ordered it sharpened.
 
-He took the drawing out of his pocket.
-
-He did not place it as an experiment. He did not measure the distance from the hole or note the position in his notebook. He simply set it on the ground in front of him, facing the hole, and left it there.
-
-Then he waited.
-
-The square did what squares do. The traders traded. A. Rhombus was visible at the far end, as he always was, doing something with a great deal of personal satisfaction. The cedar smell was present, ambient, giving nothing away.
-
-Nothing happened.
-
-e.e. katoflio sat with this. He was aware, in a way he had not been on the other Thursday, that nothing happening was not the same as nothing being there. He had learned that. It had taken six experiments and one unwitnessed Thursday and eight days of a rope cordon to learn it, but he had.
-
-He stayed.
-
-The cedar smell was patient. So was he.
+He considered this for a moment, and then did not consider it, which was a skill he had perfected over many years of administration.
 
 
-It was not the cedar smell that changed first.
+He approached the cordon. He had read A. Octagon's observations three times the previous evening. They were, as promised, accurate. That was precisely what made them difficult. She had not speculated. She had not editorialised. She had written, in the careful language of a trained observer, exactly what had occurred: the cedar smell, the warmth, the directed approach, the child's notebook, the correction from *It* to *He*. Each sentence had the quality of a well-measured line, nothing more than it needed to be, nothing less.
 
-It was the quality of the air near his hand — the hand that was resting on the ground beside the drawing — which became, very gradually and without announcement, warm.
+It was the last line he kept returning to.
 
-Not the warmth of sunlight, which moves and shifts and belongs to the sky. This was still. Directed. The warmth of something that has come close and is choosing to remain close.
+*The approach was not toward the phenomenon. It was toward the child.*
 
-e.e. katoflio did not move his hand.
+He stood at the edge of the rope and looked at the hole.
 
-He looked at the drawing. He looked at the hole, just visible on the other side of the rope. He looked back at his hand, which was warm, and beside which something was present in a way he could not see clearly but could not mistake.
+The cedar smell was present. He had noticed it before, of course, had noted it, filed it under *aromatic compound, origin unknown, likely external source*. But in the early quiet of the square, with no witnesses and no panel and no language to perform, it arrived differently. Not stronger. Just present, in the way that things are present when there is nothing else competing for attention.
 
-He thought: it came back.
+He reached, automatically, for the reasonable interpretation.
 
-And then, because he was eleven and precise even about the things that undid him: not back. Here. It came here, to where I am, and it stayed.
+*Cedar-based aromatic compound,* he thought. *Persistent. Possibly structural, porous material in the subsurface, aromatic resins—*
 
+The smell was patient.
 
-The warmth did not press or insist. It was simply there, at the edge of his hand, with the quality of something that is being careful about how much it offers because it does not want to ask too much in return.
+That was the thought that arrived instead of the rest of the sentence. Not a classification. Not a characteristic he had meant to attribute. Just: it was patient. The cedar smell, the quality of the air around the hole, the something that was present and had been present since before any of them had arrived with ropes and measuring rods; patient in the way weather is patient, in the way that does not require an audience or a conclusion.
 
-He held very still, because holding still was the one thing he could give back.
-
-He stayed like that for a long time. The traders traded. The cedar smell settled around them both. The drawing lay between them on the ground, a small Isosceles with a notebook, and whatever was beside his hand regarded it, or regarded him, or both — he could not tell the difference, and was beginning to think that was correct.
-
-At some point the warmth eased back, gently, the way it had before. Not gone. Just no longer close.
-
-e.e. katoflio let out a breath he had not known he was holding.
-
-He picked up the drawing. He put it back in his pocket. He opened his notebook.
+He stood very still.
 
 
-He thought about what to write. He thought for a while.
+The warmth arrived without announcement.
 
-Then he wrote:
+He did not reach for it. He did not place his palm at the edge of the hole, as A. Octagon had done. He was simply standing at the rope's boundary, a large Dodecagon who had come to the square for reasons he was no longer certain of, and the warmth was there, at his side, near his hand, directed in a way that warmth from ambient sources was not.
 
-*He came because he wanted to.*
+He looked at his hand.
 
-He looked at this.
+He began to form a sentence. *Radiant thermal effect, subsurface; proximate source; thermal gradient consistent with—*
 
-He crossed out *He* and wrote *It*, and then crossed that out too and wrote *He* again, because that was the more accurate word and he had promised himself, when he started the notebook, that the notebook would be accurate.
+The sentence did not complete itself.
 
-He closed it. He stood up. He looked at the hole, which was inside its rope, which smelled of cedar, which was the ordinary market square of Flatland on a Tuesday morning in the time before the review had begun.
+Into the space where the rest of the sentence should have been, something arrived. Not a sound. Not quite a thought. More like a thought that was not his, arriving in his mind with the quiet assurance of something that knew exactly where it was going.
 
-He knew something now that he had not known yesterday, and could not prove, and would not be able to put in any form that the Provost's ledger would accept, and which was, for exactly those reasons, entirely his.
+*Here is the shape of me.*
+
+The Provost stood entirely still.
+
+He was a shape who had spent his entire professional life in the confident belief that the world, examined with sufficient rigour, would eventually consent to be understood. Most things, under sufficient examination, did consent.
+
+The hole smelled of cedar. The warmth remained near his hand, patient as weather, making no further demand.
+
+He understood, in the specific way of someone who has spent a long time being wrong, that this was not a thing that would consent.
+
+
+He did not know how long he stood there.
+
+At some point the warmth eased back, gently, in the way it apparently did. The cedar smell settled to its usual ambience. The square remained the square.
+
+The Provost straightened. He looked at the hole; still a hole, still inside its rope, still awaiting classification.
+
+He took out his notebook.
+
+He held his pencil above the page.
+
+He thought about what to write.
+
+He put the pencil away.
+
+He turned and walked back across the square toward the Registry, where the panel would be waiting, where A. Octagon's observations would be read and discussed, where the appropriate language would be applied to the phenomenon and the framework would begin.
+
+He was three-quarters of the way across the square when he stopped.
+
+He did not mean to stop. It was not a decision. Something in him had simply become uncertain whether the world behind him was the same world he had been crossing for the last several decades, and the uncertainty expressed itself as stillness, and then as a single look back.
+
+The hole was there, in the ordinary market square of Flatland, inside its neat rope, smelling of cedar.
+
+He turned back around. He continued to the Registry. He did not tell anyone what had happened, partly because he had no accurate language for it yet, and partly because a Provost who could not complete a sentence in his own notebook was not, in his experience, ready to convene a panel.
+
+The review would proceed. He had not changed his mind about that.
+
+He was no longer certain, however, that the review would be sufficient.

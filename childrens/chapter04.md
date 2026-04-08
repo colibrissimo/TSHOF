@@ -42,7 +42,7 @@ A. Octagon was quiet for a moment. Not the quiet of someone deciding whether to 
 
 "May I see?" she said.
 
-He took the wrapped drawing from his pocket. He held it for just a moment — one moment, which he did not examine too closely — and then handed it to her.
+He took the wrapped drawing from his pocket. He held it for just a moment, one moment, which he did not examine too closely, and then handed it to her.
 
 She unwrapped it carefully. She held it at the proper angle. She looked at it for a long time without saying what it was or wasn't.
 
@@ -69,7 +69,7 @@ She looked at it a moment longer. Then she wrapped it again, exactly as he had w
 
 It was not a dramatic question. She said it the way she said everything: as though the situation had a correct next step and she was identifying it.
 
-e.e. katoflio took the drawing back. It was still his. That was — he was relieved. He was also aware of something else, smaller and less comfortable, which was that it would not be only his for very much longer.
+e.e. katoflio took the drawing back. It was still his. That was. He was relieved. He was also aware of something else, smaller and less comfortable, which was that it would not be only his for very much longer.
 
 "Now?" he said.
 

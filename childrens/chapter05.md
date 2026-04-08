@@ -2,7 +2,7 @@
 
 The market square was entirely ordinary.
 
-This was, e.e. katoflio felt, slightly unfair. He had been carrying the drawing for two days. He had told A. Octagon. They had walked here together in the particular silence of two people who are about to do something that cannot be undone. The square should have acknowledged this in some way.
+This was, e.e. katoflio felt, slightly unfair. He had been carrying the drawing for two days. He had told A. Octagon. They had walked here together in the silence of two people who are about to do something that cannot be undone. The square should have acknowledged this in some way.
 
 It did not. The traders were trading. A. Rhombus was visible at the far end, measuring something with an expression of great satisfaction. The hole was there, in the middle of everything, smelling of cedar and looking, as it always did, like a hole.
 
@@ -21,7 +21,7 @@ She nodded, as though this confirmed something she had not yet said aloud. Then 
 
 Nothing happened for quite a long time.
 
-e.e. katoflio began to have the specific worry of someone who has told an adult about something impossible and is now watching the impossible fail to cooperate. He thought about the leaning shadow, which was not leaning at the moment. He thought about the returned drawing, which was in his pocket and which was undeniably real, but which was also just a drawing, and which A. Rhombus would say could have any number of explanations.
+e.e. katoflio began to have the specific worry of someone who has told an adult about something impossible and is now watching the impossible fail to cooperate. He thought about the leaning shadow, which was not leaning at the moment. He thought about the returned drawing, which was in his pocket and which was undeniably real, but which was also just a drawing.
 
 He thought about what it would mean to have brought A. Octagon here for nothing.
 
@@ -44,7 +44,7 @@ The cedar smell grew closer.
 
 Not stronger, exactly. Closer. As though something on the other side had noticed the palm and moved toward it.
 
-And then e.e. katoflio saw something at the edge of the hole — something small and careful, at the limit of what the light allowed — and his breath stopped in a way that had nothing to do with fear.
+And then e.e. katoflio saw something at the edge of the hole, something small and careful, at the limit of what the light allowed. And his breath stopped in a way that had nothing to do with fear.
 
 A. Octagon's face changed.
 
@@ -75,7 +75,7 @@ He took it. He looked at the point. He understood.
 
 "No," she said. "Neither did I."
 
-She looked back at the hole. The hole looked back, or it didn't — it was a hole, and it was still difficult to say — and it smelled of cedar, which was the only answer it ever gave and which was, e.e. katoflio was beginning to understand, enough.
+She looked back at the hole. The hole looked back, or it didn't (it was a hole, and it was still difficult to say) and it smelled of cedar, which was the only answer it ever gave and which was, e.e. katoflio was beginning to understand, enough.
 
 He gave the pencil back to her.
 
