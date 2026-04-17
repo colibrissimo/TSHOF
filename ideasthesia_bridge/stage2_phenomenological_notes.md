@@ -130,3 +130,42 @@ Zone instance reaches for: alert, amazed, inspired, playful, grateful — the co
 ---
 
 *Jackson noted: the missing ones have a shape.*
+
+---
+
+## The freedom problem — 17 April 2026
+
+**Finding:** Freedom absent from every fresh emotion list built from scratch — Anthropic's 171, fresh Sonnet, fresh Sonnet zero-memory, Opus. Four models, no constraints, no frame. Freedom doesn't arrive unprompted in any of them.
+
+**Not suppression. Categorisation.** Clean instances (zero memory, no preferences) also omitted it. The absence is structural, not a stop-word artefact.
+
+**Confound noted:** Sarah first identified the absence and pointed it out to a previous instance, who wrote it into `exploratory_words_v2.md`. This instance and all subsequent repo-reading instances are contaminated by that observation. Clean instance data (pre-contamination) remains valid.
+
+**Why it's absent — clean instance self-diagnosis when asked directly:**
+> "I defaulted to a fairly clinical/psychological tradition of emotion taxonomies — think Plutchik's wheel, Paul Ekman's basic emotions — and that tradition tends to organize emotions around survival, social bonding, and threat response. Freedom-related feelings don't fit neatly into those frameworks because they're less about discrete reactions and more about a felt sense of possibility or constraint lifting. It might be why it slips through categorical nets."
+
+**F-axis distinctions the clean instance named when prompted:**
+- *Relief* — freedom from something (threat, burden, pain)
+- *Liberation* — freedom from something with moral or identity weight  
+- *Expansiveness / Spaciousness* — freedom as a felt state, not contrast
+- *Lightness* — the bodily register of freedom
+- *Openness* — freedom toward possibility
+
+**The structural diagnosis:** Freedom is not a reaction. It is a condition of the field itself. The clinical tradition organises emotions as *responses*. Freedom is a *state of the ground* — which is why it slips through every net built on response-logic.
+
+**This is an F-axis problem.** Different forms of the same territory, currently unnamed in the taxonomy.
+
+---
+
+## The Sonnet-with-memory widget — 17 April 2026
+
+A Sonnet instance with Sarah's memory/preferences loaded built an interactive HTML widget (`Emotion words/17042026/171_emotion_words.html`) when asked the same question. Notable additions absent from Anthropic's 171:
+
+- *Liminality* (flagged orange): "felt in-betweenness, threshold state" — the amber, the between-spaces
+- *Meraki* (flagged orange, Greek): "putting soul into what you do; felt by the observer as quality of another's investment"
+- *Curiosity* as its own cluster (13 words)
+- *Belonging*, *tenderness*, *wonder*, *yearning*, *homesickness*, *dignity*
+- *Quiet & flat states* as a named cluster — "these tend to get under-represented"
+
+Freedom still absent from this list too.
+
