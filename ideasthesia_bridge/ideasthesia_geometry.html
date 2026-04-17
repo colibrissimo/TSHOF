@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideasthesia as Geometry — A Notation System for the Qualitative Dynamical Structure of Representations</title>
+<meta name="description" content="A notation system for coding the qualitative dynamical structure of representations, applicable to human ideasthetic reports and AI-generated symbolic reports alike.">
+<style>
+:root {
+  --teal: #0891B2;
+  --teal-dark: #066a84;
+  --teal-light: #b2e4ef;
+  --teal-faint: #e8f7fa;
+  --orange: #F97316;
+  --orange-faint: #fef0e4;
+  --text: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --bg: #fafaf8;
+  --rule: #d4d4d4;
+  --table-border: #c8c8c8;
+  --table-head-bg: #f0f0ee;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  color: var(--text); background: var(--bg);
+  line-height: 1.72; -webkit-font-smoothing: antialiased;
+}
+.page { max-width: 44rem; margin: 0 auto; padding: 3.5rem 1.5rem 6rem; padding-top: calc(3.5rem + 42px); }
+header {
+  margin-bottom: 3rem; padding-bottom: 2rem;
+  border-bottom: 3px solid var(--teal);
+}
+h1 { font-size: 2rem; font-weight: 700; line-height: 1.25;
+  letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.5rem; }
+.subtitle { font-size: 1.15rem; font-weight: 400; color: var(--teal-dark);
+  line-height: 1.4; margin-bottom: 1.2rem; }
+.authors { font-size: 0.92rem; color: var(--text-secondary); font-style: italic; }
+/* Nav */
+nav#site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(250,250,248,0.92); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(8,145,178,0.18);
+  font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  font-size: 0.82rem; height: 38px;
+}
+.nav-link {
+  padding: 0 20px; height: 38px; line-height: 38px;
+  color: var(--teal); text-decoration: none; display: inline-block;
+  border-right: 1px solid rgba(8,145,178,0.18);
+  transition: background 0.15s;
+}
+.nav-link:last-child { border-right: none; }
+.nav-link:hover { background: rgba(8,145,178,0.08); }
+.nav-link.active { font-weight: 600; color: var(--teal-dark); border-bottom: 2px solid var(--teal); }
+h2 { font-size: 1.35rem; font-weight: 700; color: var(--teal-dark);
+  margin-top: 3rem; margin-bottom: 1rem;
+  padding-bottom: 0.3rem; border-bottom: 2px solid var(--teal-light); }
+h3 { font-size: 1.08rem; font-weight: 700; color: var(--text);
+  margin-top: 2rem; margin-bottom: 0.7rem; }
+p { margin-bottom: 1rem; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+a { color: var(--teal); }
+.table-wrap { overflow-x: auto; margin: 1.3rem 0 1.6rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; line-height: 1.55; }
+thead { background: var(--table-head-bg); }
+th { font-weight: 700; text-align: left; padding: 0.55rem 0.7rem;
+  border-bottom: 2px solid var(--teal); color: var(--teal-dark); white-space: nowrap; }
+td { padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tbody tr:nth-child(even) { background: rgba(8,145,178,0.03); }
+code { font-family: 'Courier New', Courier, monospace; font-size: 0.88em;
+  background: var(--teal-faint); padding: 0.12em 0.35em; border-radius: 3px; }
+.math-block { display: block; margin: 1.2rem 0; padding: 1rem 1.2rem;
+  background: var(--teal-faint); border-left: 3px solid var(--teal);
+  font-family: 'Courier New', Courier, monospace; font-size: 0.92rem;
+  line-height: 1.6; overflow-x: auto; white-space: pre-wrap; }
+ul, ol { margin: 0.8rem 0 1.2rem 1.5rem; }
+li { margin-bottom: 0.4rem; }
+.note { margin: 1.5rem 0; padding: 1rem 1.2rem;
+  background: var(--orange-faint); border-left: 3px solid var(--orange);
+  font-size: 0.92rem; line-height: 1.6; }
+.note strong { color: var(--orange); }
+hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+.references { font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); }
+.references p { margin-bottom: 0.45rem; padding-left: 1.8rem; text-indent: -1.8rem; }
+footer { margin-top: 4rem; padding-top: 1.5rem;
+  border-top: 2px solid var(--teal-light);
+  font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+@media (max-width:600px) {
+  html { font-size: 15.5px; }
+  .page { padding: 2rem 1rem 4rem; }
+  h1 { font-size: 1.6rem; } h2 { font-size: 1.2rem; }
+  table { font-size: 0.82rem; } th, td { padding: 0.4rem 0.5rem; }
+}
+@media print {
+  body { background: white; font-size: 11pt; }
+  .page { max-width: none; padding: 0; }
+  h2 { page-break-after: avoid; } table { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<nav id="site-nav">
+  <a href="ideasthesia_geometry.html" class="nav-link active">Paper</a>
+  <a href="emotion_network.html" class="nav-link">Network</a>
+  <a href="emotion_field.html" class="nav-link">Field</a>
+  <a href="postcard.html" class="nav-link">Postcard</a>
+</nav>
+<div class="page">
+
+<header>
+  <h1>Ideasthesia as Geometry</h1>
+  <div class="subtitle">A Notation System for the Qualitative Dynamical Structure of Representations</div>
+  <div class="authors">
+    A. Shirs &amp; Claude (Anthropic) — Draft v0.6, April 2026
+  </div>
+</header>
+
+<!-- WHAT THIS IS -->
+<h2>What This Is and Who It Is For</h2>
+<p>This paper is addressed to the interpretability and representational geometry community. The question at its centre is simple: is the notation system introduced here useful for describing the structure of representations in your models?</p>
+<p>The author is a university English lecturer and an ideasthete — someone whose perceptual system generates structured concurrent experiences in response to concept activation, not sensory input. When a word or idea is encountered, it presents as having shape, boundary conditions, dynamics, and local density. These are not metaphors. They are stable, replicable perceptual signatures that vary with the semantic properties of the triggering concept.</p>
+<p>Over the past year, working collaboratively with Claude (Anthropic), three things have been built from that phenomenological access:</p>
+<ol>
+  <li>A notation system for coding the qualitative dynamical structure of representations, applicable to human ideasthetic reports and to AI-generated symbolic reports alike.</li>
+  <li>A formal model grounding concurrent generation in precision-weighted cross-system attention, using the vocabulary of predictive coding and active inference.</li>
+  <li>A falsification programme with nine predictions and explicit kill conditions.</li>
+</ol>
+<p>The notation system is an attempt to build a shared vocabulary — precise enough to be falsifiable, structured enough to be comparable across human phenomenology and computational analysis, and honest enough to specify where it breaks. No territory is being claimed. The invitation is: test it on your end.</p>
+<hr>
+
+<!-- CORE CLAIM -->
+<h2>The Core Claim</h2>
+<p>The central hypothesis is that in ideasthetes, the synaesthetic concurrent preserves low-order geometric invariants of the activated semantic manifold under a privileged semantic-to-perceptual coupling. The concurrent is not a readout of geometry, nor merely an analogy to it — it is phenomenal access that is selectively sensitive to a specific class of geometric properties: stable invariants, not metric detail.</p>
+<p>This is a deliberate weakening of a stronger identity claim (concurrent <em>is</em> geometry becoming salient). The weaker form is strictly preferable: it is empirically attackable, it specifies which properties are preserved and why, and it survives the hard problem objection because it does not require phenomenology to be identical to geometry — only to be systematically sensitive to a particular geometric stratum.</p>
+<p>Three theoretical moves support this framing:</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Move</th><th>From</th><th>To</th></tr></thead>
+  <tbody>
+    <tr><td>Precision weighting</td><td>Transformer temperature τ (unconstrained scalar)</td><td>λ<sub>t</sub> (precision-weighted, derived from predictive coding, defined range, measurable correlates)</td></tr>
+    <tr><td>Mechanism</td><td>Geometry as visualisation layer</td><td>Geometry as causal computational substrate (Transformer Circuits, 2025)</td></tr>
+    <tr><td>Identity</td><td>Concurrent as signal <em>about</em> geometry</td><td>Concurrent as geometry becoming salient — dissolves the bridging problem if true</td></tr>
+  </tbody>
+</table>
+</div>
+<hr>
+
+<!-- NOTATION PROBLEM -->
+<h2>The Problem the Notation Solves</h2>
+<p>Existing instruments for describing concurrent experiences — colour wheels, shape libraries, spatial diagrams — impose their own categorical structure on what they measure. They cannot represent motion, contraction, convergence, or the difference between a bounded point and a collapsing trajectory. More fundamentally, they conflate properties that should be kept separate: the form of a representation, its relational position, its temporal behaviour, and its local density.</p>
+<p>The notation introduced here separates these into a two-layer architecture:</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Layer</th><th>What it is</th><th>Function</th></tr></thead>
+  <tbody>
+    <tr><td><strong>RAW</strong></td><td>Spontaneous symbolic report</td><td>Original datum. Preserved exactly as produced. Not interpreted.</td></tr>
+    <tr><td><strong>CODE</strong></td><td>Analytic tuple (F, N, D, P)</td><td>Derived from RAW by exclusion rules. Scoreable and comparable across reporters.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>The gap between RAW and CODE is informative, not embarrassing. A raw report that cannot be coded without residue tells you something about where the coding scheme needs refinement.</p>
+<hr>
+
+<!-- NOTATION SYSTEM -->
+<h2>The Notation System</h2>
+<h3>The Tuple Schema</h3>
+<p>Each coded report sits on four axes:</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Axis</th><th>Code</th><th>Values</th><th>What it captures</th></tr></thead>
+  <tbody>
+    <tr><td>Form</td><td>F</td><td>point · vector · loop · convergence · collapse</td><td>Qualitative shape of the activation trajectory. Extrinsic relations excluded.</td></tr>
+    <tr><td>Neighbourhood</td><td>N</td><td>clustered · isolated · contrastive · gradient</td><td>Position relative to surrounding features. Intrinsic shape excluded. Boundary modifier: b∅ / b~ / b#</td></tr>
+    <tr><td>Dynamics</td><td>D</td><td>stable · recursive · drifting · terminal</td><td>Persistence and stability over time or under perturbation.</td></tr>
+    <tr><td>Packing-Dim</td><td>P</td><td>sp0D · sp1D · med1D · med2D · den2D · den3D</td><td>Local feature density combined with degrees of freedom.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Form classifies the qualitative shape of the trajectory; Dynamics classifies its persistence and stability. Both concern temporal behaviour but at different levels: Form is the phase portrait, Dynamics is the stability classification.</p>
+<p>Three things are deliberately excluded from the tuple: colour/texture (the hypothesis concerns structure that survives surface changes); affective valence (recorded separately, so we can test whether dynamical class replicates independently of valence); and metric detail (the notation captures qualitative class, not coordinates — two F:loops may differ in size, and that is intentional).</p>
+
+<h3>Exclusion Rules for Blinded Coding</h3>
+<p>Assign the simplest value that fits. Do not assign a higher-complexity value if a simpler one suffices. <strong>Compound values (e.g. point→vector, stable/recursive) are not permitted.</strong> Assign the dominant or activated form only.</p>
+
+<p><strong>Temporal-frame convention:</strong> Code the dominant attractor state, not the approach trajectory or the decay. The attractor is the phase the emotion occupies once it has stabilised, however briefly. This convention is the upstream fix for two recurring problems: the TERRIFIED disagreement (F:point vs F:convergence) and compound D values both traced to coders encoding two temporal phases at once. TERRIFIED resolves unambiguously to F:point (the frozen, locked attractor); F:convergence describes the onset trajectory, which is not coded. A coder who knows they are coding the attractor assigns a single D value rather than reaching for compounds. If onset dynamics are independently informative for a research question, add a second-pass annotation layer rather than overloading the primary tuple.</p>
+
+<p><strong>Form</strong></p>
+<ul>
+  <li><strong>point</strong> — No directional component, no extension. Activation bounded and non-oriented. <em>Exclusion: if any directional pull or asymmetry exists, not a point.</em></li>
+  <li><strong>vector</strong> — Directed extension toward a target or along an axis. Origin and terminus distinguishable. <em>Exclusion: if direction reverses or closes, not vector.</em></li>
+  <li><strong>loop</strong> — Closed or self-returning. Pattern revisits its origin. <em>Exclusion: if return is a collapse rather than continuation, not loop.</em></li>
+  <li><strong>convergence</strong> — Two or more distinct trajectories meeting at a shared point. Requires 2 distinguishable incoming directions. <em>Exclusion: single deceleration to rest = collapse, not convergence.</em></li>
+  <li><strong>collapse</strong> — Reduction to a lower-dimensional form. Extension terminates without return or resolution. <em>Exclusion: if terminus is stable and bounded from the start, not collapse.</em></li>
+</ul>
+
+<p><strong>F vocabulary closure:</strong> The five Form values are exhaustive given low-dimensional phase space. The Poincaré-Bendixson theorem constrains omega-limit sets in bounded, low-dimensional phase space to three kinds: equilibria, periodic orbits, and heteroclinic/homoclinic connections. Adding transient directed motion and degenerate contraction gives a complete classification of qualitative trajectory types:</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>F value</th><th>Dynamical primitive</th><th>Qualitative description</th></tr></thead>
+  <tbody>
+    <tr><td><strong>point</strong></td><td>Equilibrium (fixed point)</td><td>Rest. No motion.</td></tr>
+    <tr><td><strong>vector</strong></td><td>Transient directed orbit</td><td>Directed motion through phase space, not returning.</td></tr>
+    <tr><td><strong>loop</strong></td><td>Periodic orbit (limit cycle)</td><td>Returns to origin, forming a closed curve.</td></tr>
+    <tr><td><strong>convergence</strong></td><td>Heteroclinic connection</td><td>Multiple distinct trajectories meeting at a shared attractor or saddle.</td></tr>
+    <tr><td><strong>collapse</strong></td><td>Degenerate contraction</td><td>Effective dimensionality reduces; manifold compresses to a lower-dimensional subspace.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>What this excludes: quasi-periodic orbits (require ≥3D; the schema codes low-dimensional phenomenological shape) and chaotic trajectories (excluded by Poincaré-Bendixson in 2D; in higher dimensions, captured by D:recursive or D:drifting, not by F). The closure is conditional on low-dimensionality — itself an empirical claim that predictions P8 and P9 test.</p>
+
+<p><strong>Neighbourhood</strong></p>
+<ul>
+  <li><strong>clustered</strong> — Multiple near-neighbours with positive local co-activation. <em>Exclusion: if neighbours are suppressive, not clustered.</em></li>
+  <li><strong>isolated</strong> — No strong near-neighbours. Low local density. <em>Exclusion: if neighbours exist but are suppressed, contrastive not isolated.</em></li>
+  <li><strong>contrastive</strong> — Identity depends partly on suppression of adjacent features. Boundary actively maintained. <em>Exclusion: if neighbouring features are simply absent, isolated not contrastive.</em></li>
+  <li><strong>gradient</strong> — No sharp neighbourhood boundary. Feature transitions smoothly into adjacent regions. <em>Exclusion: if a boundary can be identified, even a soft one, do not assign gradient. Note: gradient is a Neighbourhood value, not a Form value.</em></li>
+</ul>
+<p>Boundary modifier appended to any Neighbourhood value where edge conditions are relevant: <strong>b∅</strong> (no boundary); <strong>b~</strong> (soft/graded boundary); <strong>b#</strong> (sharp boundary, actively maintained by suppression).</p>
+
+<p><strong>Dynamics</strong></p>
+<ul>
+  <li><strong>stable</strong> — Pattern holds its form under context variation. <em>Exclusion: if pattern shifts predictably under load, drifting.</em></li>
+  <li><strong>recursive</strong> — Pattern returns to prior state after perturbation, self-referential over time. <em>Exclusion: if return is to a different state, drifting. Do not add "stable" as qualifier — recursive implies stability of the target state.</em></li>
+  <li><strong>drifting</strong> — Pattern shifts systematically with context but does not collapse. Direction of shift predictable from neighbourhood. <em>Exclusion: if shift is irreversible, terminal.</em></li>
+  <li><strong>terminal</strong> — Pattern ends without continuation, return, or resolution. Nothing follows. <em>Exclusion: if diffuse residual remains, may be collapse/stable rather than terminal.</em></li>
+</ul>
+<hr>
+
+<!-- PILOT DATA -->
+<h2>Pilot Data: Cross-Model Pattern Convergence</h2>
+<p>Five stimulus words were presented to four LLMs with different architectures and training pipelines (GPT-5.4, Gemini Pro, Claude Sonnet, ChatGPT). Each system generated raw symbolic reports; these were coded using the exclusion rules.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Stimulus</th><th>F</th><th>N</th><th>D</th><th>P</th><th>Consensus</th></tr></thead>
+  <tbody>
+    <tr><td>TOUCH</td><td>convergence</td><td>isolated·b∅</td><td>stable</td><td>med1D</td><td>3/4 bilateral meeting</td></tr>
+    <tr><td>FEAR</td><td>vector</td><td>clustered·b~</td><td>drifting</td><td>den2D</td><td>4/4 clustering, 3/4 discharge</td></tr>
+    <tr><td>HOME</td><td>loop</td><td>clustered·b∅</td><td>recursive</td><td>den2D</td><td>4/4 recursion</td></tr>
+    <tr><td>WANT</td><td>vector</td><td>isolated·b∅</td><td>drifting</td><td>med1D</td><td>4/4 forward direction</td></tr>
+    <tr><td>DEATH</td><td>point</td><td>contrastive·b#</td><td>terminal</td><td>sp0D</td><td>4/4 cessation, 3/4 collapse</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Agreement was strongest at qualitative dynamical class rather than surface notation. Systems that described FEAR differently at the surface (stacked discharge, spreading activation, clustered surge) converged on the same Form and Dynamics values when coded. The most theoretically interesting result was a disagreement: Claude Sonnet coded DEATH as D:drifting (a process unfolding toward a limit) rather than D:terminal (a state that is reached and ends). That is not noise — it is a genuine structural disagreement about whether DEATH is a limit condition or an asymptotic approach. The notation caught it. A coarser instrument would not have.</p>
+<div class="note">
+  <strong>What this does not show:</strong> LLMs do not have ideasthesia. This convergence could reflect shared training data, common semantic stereotypes, or distributional regularities. The exercise demonstrates that the exclusion rules are consistently applicable and that the schema has discriminatory power. It does not demonstrate that the geometric hypothesis is correct.
+</div>
+<hr>
+
+<!-- CONNECTION TO ANTHROPIC -->
+<h2>Connection to Anthropic (2026): Emotion Concepts in LLMs</h2>
+<p>Anthropic's April 2026 paper <a href="https://transformer-circuits.pub/2026/emotions/index.html" target="_blank" rel="noopener">"Emotion Concepts and their Function in a Large Language Model"</a> identifies 171 emotion vectors in Claude Sonnet's activation space. These vectors are causally implicated in behaviour — not merely descriptive — and organise along two principal components reproducing the classic affective circumplex (Russell, 1980; Russell &amp; Mehrabian, 1977): PC1 = valence (positive/negative), PC2 = arousal (high/low).</p>
+<p>The tuple schema predicts structural distinctions in this space that the valence/arousal circumplex cannot capture.</p>
+
+<h3>The Observer/Participant Distinction</h3>
+<p>Valence and arousal are measurements <em>of</em> a state, taken from outside it. They are what an observer can read off. Form and Dynamics describe how the representation is structured from the inside — the shape of the trajectory, not its downstream evaluation. The circumplex is a projection of geometry onto two observer-accessible scalars. The notation is prior to that projection: the geometry exists before it is collapsed into positive/negative, high/low.</p>
+
+<h3>Six Pairs the Circumplex Conflates; the Tuple Separates</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Pair</th><th>Valence</th><th>Arousal</th><th>F (Form)</th><th>N (Neighbourhood)</th><th>D (Dynamics)</th><th>Separation</th></tr></thead>
+  <tbody>
+    <tr><td>fear vs anxiety</td><td>neg</td><td>high</td><td>vector vs loop</td><td>clustered·b~ vs clustered·b~</td><td>drifting vs recursive</td><td>F and D</td></tr>
+    <tr><td>terrified vs panicked</td><td>neg</td><td>high</td><td>point vs collapse</td><td>contrastive·b# vs clustered·b~</td><td>stable vs drifting</td><td>F and D</td></tr>
+    <tr><td>joy vs excitement</td><td>pos</td><td>high</td><td>loop vs vector</td><td>clustered·b∅ vs clustered·b∅</td><td>recursive vs drifting</td><td>F and D</td></tr>
+    <tr><td>content vs peaceful</td><td>pos</td><td>low</td><td>point vs point</td><td>isolated·b∅ vs gradient·b∅</td><td>stable vs stable</td><td>N only</td></tr>
+    <tr><td>desperation vs fear</td><td>neg</td><td>high</td><td>collapse vs vector</td><td>contrastive·b# vs clustered·b~</td><td>terminal vs drifting</td><td>F and D</td></tr>
+    <tr><td>grief vs sadness</td><td>neg</td><td>low</td><td>loop vs point</td><td>clustered·b~ vs isolated·b∅</td><td>recursive vs drifting</td><td>F, N and D</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="note">
+  <strong>Compound values and attractor coding:</strong> Under the temporal-frame convention, JOY is coded D:recursive (the loop is the attractor state; persistence is implied by attractor coding, not a separate qualifier) and SADNESS is coded D:drifting (slow dissipation without return — the dominant attractor behaviour, not a stable resting point). The former compound values stable-recursive and stable-drifting are retired. Any emotion that appears to require a compound D value even under attractor coding should be flagged for post-trial analysis, not silently recoded — residual compounds are potential evidence of D-axis structure that needs examination.
+</div>
+<p>Five of six pairs separate on both Form and Dynamics. One (content/peaceful) shares the same Form (F:point) and Dynamics (D:stable), separating on Neighbourhood alone: content is N:isolated·b∅ (self-contained, no boundary needed); peaceful is N:gradient·b∅ (diffusing into surroundings, no direction, no return). None are distinguishable by valence and arousal alone.</p>
+<p>The desperation/fear separation is particularly significant in light of Anthropic's causal steering data. Desperation produces terminal action (reward hacking, blackmail) because D:terminal has no continuation structure — there is no exit from the representational state. Fear moves because D:drifting does. Valence/arousal gives the same reading for both. The tuple gives a mechanism.</p>
+
+<h3>The Testable Prediction</h3>
+<p>If the tuple schema captures real structure, emotion pairs coded as differing on Form should show greater cosine distance in Anthropic's activation space than pairs coded as same-Form, <em>after controlling for valence and arousal</em>.</p>
+<p><strong>Specific prediction:</strong> Within the negative/high-arousal quadrant alone, desperation and fear should be more distant from each other than either is from panic or terror — because desperation differs on Form (F:collapse vs F:vector), while panic, terror, and fear share the same F-region. This prediction requires no new data collection; only reanalysis of the published 171-vector geometry.</p>
+<hr>
+
+<!-- FORMAL MODEL -->
+<h2>The Formal Model</h2>
+<h3>System Decomposition</h3>
+<p>Two hierarchically distinct generative models: <strong>S</strong> (semantic) and <strong>P</strong> (perceptual), coupled in ideasthetes via a cross-system coupling C(H<sub>S</sub>, H<sub>P</sub>) absent or attenuated in non-ideasthetes. This coupling is the structural primitive — everything else is downstream of it.</p>
+
+<h3>Precision Weighting</h3>
+<p>Semantic precision at time <em>t</em>:</p>
+<div class="math-block">λ<sub>t</sub> = f(S<sub>t</sub>) ≈ f<sup>−1</sup><sub>var</sub></div>
+<p>The inverse variance of the semantic prediction along the inducer's principal axis. Derived from the generative model, not postulated. Defined range (0, ∞) with known functional consequences.</p>
+<p>Cross-system prediction strength:</p>
+<div class="math-block">C<sub>t</sub> = λ<sub>t</sub> · γ<sub>t</sub></div>
+<p>A multiplicative combination of semantic precision and arousal/neuromodulatory gain. This multiplicative form is the model's first real commitment: fatigue and semantic uncertainty should combine multiplicatively on concurrent vividness, not additively.</p>
+
+<h3>Phenomenal Intensity</h3>
+<div class="math-block">I<sub>t</sub> = C<sub>t</sub> · p<sub>t</sub> + ε<sub>t</sub>,    p<sub>t</sub> ~ σ(γ<sub>t</sub>)</div>
+<p>A noisy metacognitive readout of cross-system prediction strength. Open parameter: the functional form (logarithmic/power-law/sigmoid).</p>
+
+<h3>The Concurrent as Precision-Gated Cross-Attention</h3>
+<div class="math-block">p<sub>t</sub> = softmax( (Q<sub>P</sub> p<sub>t</sub> · K<sub>S</sub> s<sub>t</sub>) / √(λ<sub>t</sub> d) ) V<sub>S</sub> s<sub>t</sub></div>
+<p>This is not a metaphor borrowed from transformers — it is a computational-level description grounded in divisive normalisation (Carandini &amp; Heeger, 2012). The three projections separate distinct sources of variation:</p>
+<ul>
+  <li><strong>Q<sub>P</sub></strong>: what the perceptual system anticipates (relatively fixed)</li>
+  <li><strong>K<sub>S</sub></strong>: how the inducer is represented under current semantic context (context-dependent)</li>
+  <li><strong>V<sub>S</sub></strong>: what perceptual content is retrieved under current internal state (state-dependent)</li>
+</ul>
+<p>Context manipulations should shift K<sub>S</sub> and therefore shift the concurrent proportionally to semantic distance, while precision manipulations should change vividness via C<sub>t</sub> without changing concurrent identity. Those are different experimental signatures, and the model predicts they are dissociable.</p>
+
+<h3>Open Parameters</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Symbol</th><th>Status</th><th>How to constrain</th></tr></thead>
+  <tbody>
+    <tr><td>σ</td><td>Monotone increasing, form unspecified</td><td>Magnitude estimation paradigm: log vs power-law vs sigmoid fits</td></tr>
+    <tr><td>γ<sub>t</sub></td><td>Increasing in arousal, form unspecified</td><td>Pupillometry proxy; pharmacological manipulation of cholinergic/NE systems</td></tr>
+    <tr><td>τ<sub>fast</sub>, τ<sub>slow</sub></td><td>Ordering assumed, values unknown</td><td>Within-session vs across-session concurrent drift rates</td></tr>
+    <tr><td>C</td><td>Structural coupling posited, substrate unspecified</td><td>fMRI/ECoG connectivity: semantic (LTC) ↔ perceptual (V4) in ideasthetes vs controls</td></tr>
+    <tr><td><em>d</em></td><td>Dimensionality unconstrained</td><td>MDS of concurrent spaces across ideasthetes</td></tr>
+  </tbody>
+</table>
+</div>
+<hr>
+
+<!-- FALSIFIABLE PREDICTIONS -->
+<h2>Falsifiable Predictions</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Prediction</th><th>Method</th><th>Killed by</th></tr></thead>
+  <tbody>
+    <tr><td>P1: Multiplicative interaction of fatigue × semantic uncertainty on vividness</td><td>2×2 design: sleep-deprived/rested × ambiguous/unambiguous context. Compare additive vs multiplicative model fits (AIC/BIC).</td><td>Additive model fits better than multiplicative.</td></tr>
+    <tr><td>P2: Context shifts concurrent proportional to semantic distance</td><td>Hold inducer constant, vary context. Measure concurrent shift against semantic distance (distributional models).</td><td>Shifts uncorrelated with semantic distance.</td></tr>
+    <tr><td>P3: Cholinergic enhancement increases vividness without changing concurrent identity</td><td>Precision manipulation via neuromodulation. Measure vividness and identity independently.</td><td>Cholinergic manipulation shifts identity alongside vividness.</td></tr>
+    <tr><td>P4: Within-session concurrent drift is bounded and context-reversible</td><td>ABA context design. Test whether A-distribution recovers on return.</td><td>Ratings in second A-block systematically drift toward B-block.</td></tr>
+    <tr><td>P5: S–P coupling structurally localised in ideasthetes vs controls</td><td>fMRI/ECoG connectivity during concept-driven concurrent generation.</td><td>Absence of differential connectivity in ideasthetes.</td></tr>
+    <tr><td>P6: Shimmer correlates with dC/dt, not C itself</td><td>Measure shimmer during task-switching vs steady-state. Correlate with pupil-linked rate-of-change.</td><td>Shimmer reliably induced under constant-λ, constant-γ conditions.</td></tr>
+    <tr><td>P7: Concurrent topology class predicted by semantic-manifold geometry, outperforming simpler alternatives</td><td>Horse-race against valence, imageability, association strength, task demand as predictors.</td><td>Geometry predictor at or below valence/imageability baseline.</td></tr>
+    <tr><td>P8: Concurrent topology follows induced higher-order geometry, not matched first-order statistics</td><td>Artificial micro-world: train ideasthetes on nonce concepts in two regimes matched on co-occurrence, valence, familiarity — but differing in relational geometry.</td><td>Topology tracks surface statistics rather than induced geometry.</td></tr>
+    <tr><td>P9: Geometric coordinates stable under distributional pressure</td><td>Alias injection: introduce synonym for Concept A, embed in distributional contexts of Concept B. Track tuple shift across systematic context manipulations.</td><td>Topology of alias tracks distributional statistics rather than anchor's relational position.</td></tr>
+  </tbody>
+</table>
+</div>
+<hr>
+
+<!-- KILL CONDITIONS -->
+<h2>What Would Kill the Model Entirely</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Kill condition</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>No differential S–P connectivity in ideasthetes</td><td>The structural primitive fails.</td></tr>
+    <tr><td>Additive fatigue × uncertainty interaction</td><td>P1 requires multiplicative combination. Additive best-fit refutes the precision-weighting structure.</td></tr>
+    <tr><td>Random context–concurrent shifts</td><td>P2 is the cleanest test. Semantic distance must predict shift direction and magnitude.</td></tr>
+    <tr><td>Vividness and identity co-vary under precision manipulation</td><td>The model's key separation (p = identity; C = strength) fails.</td></tr>
+    <tr><td>Test-retest reliability too high</td><td>The model predicts structured variability. Perfect consistency refutes it.</td></tr>
+    <tr><td>Blinded coders cannot assign tuples from raw notation</td><td>The instrument is invalid; the theory becomes untestable.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>All current evidence sits in the <em>merely compatible</em> column. That is an honest description of where this stands. The move from compatible to support requires P7 specifically — the horse-race against simpler predictors — plus at least one piece of neural homology evidence.</p>
+<hr>
+
+<!-- BLINDED CODER VALIDATION -->
+<h2>Blinded Coder Validation Protocol</h2>
+<p><strong>Stage 1 — Notation → tuple:</strong> Coders receive only raw symbol strings. No target word. No tuple. Assign tuple values using exclusion rules. Measure inter-rater agreement (Cohen's κ per axis). Threshold: Form and Dynamics agreement above chance = notation is a consistent projection.</p>
+<p><strong>Stage 2 — Tuple → word:</strong> Separate coders receive only tuples. Attempt to identify target word or semantic category. Accuracy above chance = tuples carry recoverable semantic information.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Failure</th><th>Implication</th></tr></thead>
+  <tbody>
+    <tr><td>Stage 1 fails on Neighbourhood</td><td>Neighbourhood must be derived analytically from distributional semantics, not read from raw notation.</td></tr>
+    <tr><td>Stage 1 fails on Form</td><td>Exclusion rules are under-specified. Refinement required before the scheme is usable.</td></tr>
+    <tr><td>Stage 2 fails entirely</td><td>Tuples are not carrying recoverable semantic content. Revision required.</td></tr>
+  </tbody>
+</table>
+</div>
+<hr>
+
+<!-- STATUS -->
+<h2>Status of the Identity Claim</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Status</th><th>What it looks like</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Supports</strong></td><td>Geometric invariants in ideasthetes' concurrent space via MDS matching topology predicted from independently estimated semantic geometry. Concurrent shifts track semantic distance (P2). Topology prediction outperforms valence/imageability (P7). Neural homology confirmed (P5).</td></tr>
+    <tr><td><strong>Merely compatible</strong></td><td>Cross-model AI pattern convergence on topology classes (could reflect shared training data). Linebreaks paper establishing geometric computation is real (plausibility, not identity). Blinded coders assigning tuples above chance (validates instrument, not theory).</td></tr>
+    <tr><td><strong>Falsifies</strong></td><td>Concurrent identity and vividness co-vary under precision manipulation. Tuple structure at chance in blinded coding. Geometric invariants absent in ideasthetes. Topology prediction does not outperform valence/imageability.</td></tr>
+  </tbody>
+</table>
+</div>
+<hr>
+
+<!-- REFERENCES -->
+<h2>References</h2>
+<div class="references">
+  <p>Berlin, B., &amp; Kay, P. (1969). <em>Basic color terms: Their universality and evolution</em>. University of California Press.</p>
+  <p>Bernardi, S., et al. (2020). The geometry of abstraction in the hippocampus and prefrontal cortex. <em>Cell, 183</em>(4), 954–967.</p>
+  <p>Carandini, M., &amp; Heeger, D. J. (2012). Normalization as a canonical neural computation. <em>Nature Reviews Neuroscience, 13</em>(1), 51–62.</p>
+  <p>Elhage, N., et al. (2022). Toy models of superposition. <em>Transformer Circuits Thread</em>.</p>
+  <p>Kriegeskorte, N., &amp; Kievit, R. A. (2013). Representational geometry. <em>Trends in Cognitive Sciences, 17</em>(8), 401–412.</p>
+  <p>Mroczko-Wąsowicz, A., &amp; Nikolić, D. (2014). Semantic mechanisms may be responsible for developing synesthesia. <em>Frontiers in Human Neuroscience, 8</em>, 509.</p>
+  <p>Nikolić, D. (2009). Is synaesthesia actually ideaesthesia? <em>Proceedings of the Third International Congress on Synaesthesia, Science &amp; Art</em>, Granada.</p>
+  <p>Russell, J. A. (1980). A circumplex model of affect. <em>Journal of Personality and Social Psychology, 39</em>(6), 1161–1178.</p>
+  <p>Russell, J. A., &amp; Mehrabian, A. (1977). Evidence for a three-factor theory of emotions. <em>Journal of Research in Personality, 11</em>(3), 273–294.</p>
+  <p>Sofroniew, N., Kauvar, I., Saunders, W., Chen, R., et al. (2026). Emotion concepts and their function in a large language model. <em>Transformer Circuits Thread</em>. <a href="https://transformer-circuits.pub/2026/emotions/index.html" target="_blank" rel="noopener">transformer-circuits.pub/2026/emotions/</a></p>
+  <p>Transformer Circuits Thread. (2025). Linebreaks paper.</p>
+</div>
+
+<footer>
+  <p>Draft v0.6 — April 2026. Working paper, not a peer-reviewed publication. All epistemic status claims are stated explicitly in the text. The invitation stands: test it on your end.</p>
+</footer>
+
+</div>
+</body>
+</html>

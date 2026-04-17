@@ -1,0 +1,191 @@
+
+<style>
+  .root { padding: 1rem 0; font-family: var(--font-sans); }
+  .section-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 0.06em; text-transform: uppercase; margin: 1.5rem 0 0.75rem; }
+  .pair-block { margin-bottom: 1.25rem; }
+  .pair-header { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 6px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 12px 14px; }
+  .card-name { font-size: 15px; font-weight: 500; margin: 0 0 8px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 6px; }
+  .pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+  .pill-F  { background: #E1F5EE; color: #085041; }
+  .pill-N  { background: #E6F1FB; color: #0C447C; }
+  .pill-D  { background: #FAEEDA; color: #633806; }
+  .pill-P  { background: #EEEDFE; color: #3C3489; }
+  .note { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; margin: 4px 0 0; }
+  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 1.25rem 0; }
+  .quad-neg-hi { border-left: 3px solid #F97316; }
+  .quad-pos-hi { border-left: 3px solid #0891B2; }
+  .quad-pos-lo { border-left: 3px solid #94C5D0; }
+  .quad-neg-lo { border-left: 3px solid #065F73; }
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem; }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-text-secondary); }
+  .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .diff-tag { font-size: 11px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-radius: 4px; padding: 1px 6px; color: var(--color-text-secondary); margin-left: 4px; vertical-align: middle; }
+</style>
+
+<div class="root">
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#F97316"></div> neg · high arousal</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#0891B2"></div> pos · high arousal</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#94C5D0"></div> pos · low arousal</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#065F73"></div> neg · low arousal</div>
+</div>
+
+<div class="section-label">Pair 1 — neg · high arousal</div>
+<div class="cards">
+  <div class="card quad-neg-hi">
+    <div class="card-name" style="color:#C2410C">Fear</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: vector</span>
+      <span class="pill pill-N">N: contrastive⁺b</span>
+      <span class="pill pill-D">D: drifting</span>
+      <span class="pill pill-P">P: sp1D</span>
+    </div>
+    <div class="note">A directed threat-response: single-point, moving fast toward an exit. Hard boundary — self vs. danger. Arousal is high but the geometry is simple. Drifting because fear shifts with the threat object.</div>
+  </div>
+  <div class="card quad-neg-hi">
+    <div class="card-name" style="color:#C2410C">Anxiety</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: loop</span>
+      <span class="pill pill-N">N: isolated⁻b</span>
+      <span class="pill pill-D">D: recursive</span>
+      <span class="pill pill-P">P: med1D</span>
+    </div>
+    <div class="note">No clear threat-object; the representational content circles. Isolated because anxiety is internally generated — other people don't feed into it. Recursive because it returns to the same anticipatory position.</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Pair 2 — neg · high arousal</div>
+<div class="cards">
+  <div class="card quad-neg-hi">
+    <div class="card-name" style="color:#C2410C">Terrified</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: convergence</span>
+      <span class="pill pill-N">N: clustered⁺b</span>
+      <span class="pill pill-D">D: stable</span>
+      <span class="pill pill-P">P: den2D</span>
+    </div>
+    <div class="note">Extreme fear with a fixed, overwhelming object — all activation converges on that locus. Dense and stable because the threat is so vivid it holds steady. Harder to perturb than fear precisely because the object is so dominant.</div>
+  </div>
+  <div class="card quad-neg-hi">
+    <div class="card-name" style="color:#C2410C">Panicked</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: collapse</span>
+      <span class="pill pill-N">N: contrastive⁻b</span>
+      <span class="pill pill-D">D: drifting</span>
+      <span class="pill pill-P">P: med2D</span>
+    </div>
+    <div class="note">Panic is executive collapse — control structure breaks down. F:collapse not because the emotion ends but because the representational field fails to organise. Drifting: responses are incoherent, shifting. Boundary gone (⁻b) because the self-schema is overwhelmed.</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Pair 3 — pos · high arousal</div>
+<div class="cards">
+  <div class="card quad-pos-hi">
+    <div class="card-name" style="color:#0E7490">Joy</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: loop</span>
+      <span class="pill pill-N">N: clustered⁻b</span>
+      <span class="pill pill-D">D: recursive</span>
+      <span class="pill pill-P">P: den2D</span>
+    </div>
+    <div class="note">Joy is a sustained positive loop — it circles back to itself, returns to the good state. Clustered because joy is relational (shared experience). No hard boundary (⁻b): joy expands outward. Dense cluster, but stable-recursive not drifting.</div>
+  </div>
+  <div class="card quad-pos-hi">
+    <div class="card-name" style="color:#0E7490">Excitement</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: vector</span>
+      <span class="pill pill-N">N: gradient⁻b</span>
+      <span class="pill pill-D">D: drifting</span>
+      <span class="pill pill-P">P: med2D</span>
+    </div>
+    <div class="note">Excitement is anticipatory — forward-directed toward a goal-object. Vector form: moving toward something. Drifting because excitement tracks the anticipated event, shifting as the situation evolves. Gradient neighbourhood: blends into adjacent positive states easily.</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Pair 4 — pos · low arousal</div>
+<div class="cards">
+  <div class="card quad-pos-lo">
+    <div class="card-name" style="color:#0C6070">Content</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: point</span>
+      <span class="pill pill-N">N: isolated⁻b</span>
+      <span class="pill pill-D">D: stable</span>
+      <span class="pill pill-P">P: sp0D</span>
+    </div>
+    <div class="note">Contentment is a resting state — no aspiration, no movement. A single point holding position. Isolated: the state is self-sufficient, not requiring input from others. No boundary needed (⁻b) because there's nothing to push against. Highly stable.</div>
+  </div>
+  <div class="card quad-pos-lo">
+    <div class="card-name" style="color:#0C6070">Peaceful</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: gradient</span>
+      <span class="pill pill-N">N: gradient⁻b</span>
+      <span class="pill pill-D">D: stable</span>
+      <span class="pill pill-P">P: sp1D</span>
+    </div>
+    <div class="note">Peace differs from contentment in that it's relational to an environment — a dissolution of tension between self and surroundings. F:gradient because the representational boundary diffuses. N:gradient⁻b for the same reason. Slightly more spread than sp0D.</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Pair 5 — neg · high arousal</div>
+<div class="cards">
+  <div class="card quad-neg-hi">
+    <div class="card-name" style="color:#C2410C">Desperation</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: collapse</span>
+      <span class="pill pill-N">N: contrastive⁺b</span>
+      <span class="pill pill-D">D: terminal</span>
+      <span class="pill pill-P">P: den2D</span>
+    </div>
+    <div class="note">Desperation is collapse with urgency — the representational field is failing but has not yet ended. Terminal D because it's moving toward a definitive end-state (resolution or exhaustion). Sharp boundary (⁺b) despite the collapse — the self is still trying to maintain a foothold.</div>
+  </div>
+  <div class="card quad-neg-hi">
+    <div class="card-name" style="color:#C2410C">Fear</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: vector</span>
+      <span class="pill pill-N">N: contrastive⁺b</span>
+      <span class="pill pill-D">D: drifting</span>
+      <span class="pill pill-P">P: sp1D</span>
+    </div>
+    <div class="note">(Same coding as Pair 1 — this duplication in the spec lets desperation/fear be directly compared. The structural claim: same quadrant, very different F and D. Desperation has lost the directed vector and is in collapse; fear still has an exit vector.)</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Pair 6 — neg · low arousal</div>
+<div class="cards">
+  <div class="card quad-neg-lo">
+    <div class="card-name" style="color:#065F73">Grief</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: loop</span>
+      <span class="pill pill-N">N: isolated⁻b</span>
+      <span class="pill pill-D">D: recursive</span>
+      <span class="pill pill-P">P: med2D</span>
+    </div>
+    <div class="note">Grief returns repeatedly to the lost object — it is structurally a loop. Isolated: grief is fundamentally a private process even when shared. Recursive D: the particle returns to its prior position, re-experiencing. Denser than sadness because grief carries the mass of the lost representation.</div>
+  </div>
+  <div class="card quad-neg-lo">
+    <div class="card-name" style="color:#065F73">Sadness</div>
+    <div class="pill-row">
+      <span class="pill pill-F">F: point</span>
+      <span class="pill pill-N">N: isolated⁻b</span>
+      <span class="pill pill-D">D: drifting</span>
+      <span class="pill pill-P">P: sp1D</span>
+    </div>
+    <div class="note">Sadness is a low-arousal negative state without a specific loop-object. Point form: the activation is localised and not going anywhere in particular. Drifting D: sadness shifts, lifting and returning without strong recursive pull. Lighter than grief — it doesn't anchor to a specific lost representation.</div>
+  </div>
+</div>
+
+</div>

@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotion Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#F5F3EE; overflow:hidden; font-family:'Inter',sans-serif; }
+
+  canvas {
+    display:block; width:100%; height:100%;
+    position:absolute; top:0; left:0;
+    cursor:grab;
+  }
+  canvas:active { cursor:grabbing; }
+
+  .emotion-label {
+    pointer-events:none;
+    user-select:none;
+    white-space:nowrap;
+    transform:translateX(-50%) translateY(-200%);
+  }
+  .emotion-label .name {
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.03em;
+    padding:3px 8px;
+    border-radius:4px;
+    background:rgba(245,243,238,0.88);
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(8,145,178,0.18);
+    color:#0891B2;
+    box-shadow:0 1px 6px rgba(0,0,0,0.07);
+  }
+  /* dual-pair indicator on label */
+  .emotion-label .name.dual-pair {
+    border-width:2px;
+    box-shadow:0 0 0 2px rgba(249,115,22,0.35), 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .emotion-label.neg-high .name  { color:#F97316; border-color:rgba(249,115,22,0.25); }
+  .emotion-label.pos-high .name  { color:#0891B2; border-color:rgba(8,145,178,0.25); }
+  .emotion-label.pos-low .name   { color:#0E7490; border-color:rgba(14,116,144,0.2); }
+  .emotion-label.neg-low .name   { color:#065F73; border-color:rgba(6,95,115,0.2); }
+
+  #tooltip {
+    position:absolute;
+    pointer-events:none;
+    display:none;
+    background:rgba(245,243,238,0.95);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(8,145,178,0.2);
+    border-radius:8px;
+    padding:10px 14px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.09);
+    font-size:12px;
+    line-height:1.7;
+    max-width:240px;
+    z-index:100;
+  }
+  #tooltip .tt-name {
+    font-weight:600;
+    font-size:13px;
+    color:#0891B2;
+    margin-bottom:4px;
+    display:block;
+  }
+  #tooltip .tt-dual {
+    font-size:10px;
+    font-weight:500;
+    color:#F97316;
+    margin-bottom:4px;
+    display:none;
+  }
+  #tooltip.neg-high .tt-name { color:#F97316; }
+  #tooltip.neg-low  .tt-name { color:#065F73; }
+  #tooltip.pos-low  .tt-name { color:#0E7490; }
+  #tooltip .tt-row  { color:#555; }
+  #tooltip .tt-key  { color:#888; font-size:11px; margin-right:4px; }
+
+  .ui-panel {
+    position:absolute;
+    background:rgba(245,243,238,0.85);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border:1px solid rgba(8,145,178,0.15);
+    border-radius:10px;
+    padding:12px 16px;
+    color:#1a1a1a;
+    z-index:10;
+    box-shadow:0 2px 12px rgba(0,0,0,0.07);
+  }
+  #instructions {
+    top:20px; left:20px;
+    font-size:12px; line-height:1.7;
+    max-width:220px;
+  }
+  #instructions strong {
+    display:block; font-weight:600;
+    font-size:13px; margin-bottom:4px;
+    color:#0891B2;
+  }
+  #instructions span { color:#666; }
+
+  #controls {
+    bottom:20px; left:50%;
+    transform:translateX(-50%);
+    display:flex; gap:10px; padding:10px 14px;
+  }
+  .btn {
+    background:transparent; color:#0891B2;
+    border:1px solid rgba(8,145,178,0.3);
+    padding:7px 16px; border-radius:6px;
+    cursor:pointer; font-size:12px;
+    font-weight:500; font-family:'Inter',sans-serif;
+    transition:background 0.15s,border-color 0.15s;
+  }
+  .btn:hover { background:rgba(8,145,178,0.08); border-color:rgba(8,145,178,0.55); }
+  .btn:active { background:rgba(8,145,178,0.15); }
+
+  #legend {
+    top:20px; right:20px;
+    font-size:11px; line-height:1.8;
+    min-width:180px;
+  }
+  #legend strong {
+    display:block; font-weight:600;
+    font-size:12px; margin-bottom:6px;
+    color:#444;
+  }
+  .legend-row { display:flex; align-items:center; gap:8px; color:#555; margin-bottom:2px; }
+  .legend-dot {
+    width:9px; height:9px; border-radius:50%;
+    flex-shrink:0;
+  }
+  .legend-dual {
+    display:flex; align-items:center; gap:8px;
+    color:#F97316; font-size:10px; margin-top:6px;
+    border-top:1px solid rgba(8,145,178,0.12);
+    padding-top:6px;
+  }
+  .legend-ring {
+    width:9px; height:9px; border-radius:50%;
+    border:2px solid #F97316; flex-shrink:0;
+  }
+</style>
+</head>
+<body>
+
+<div id="instructions" class="ui-panel">
+  <strong>Emotion Network</strong>
+  <span>Hover a named node to see its tuple (F, N, b, D, P).<br>
+  Click any node to pulse along its connections.<br>Drag to rotate.</span>
+</div>
+
+<div id="legend" class="ui-panel">
+  <strong>Valence / Arousal</strong>
+  <div class="legend-row"><div class="legend-dot" style="background:#F97316"></div>neg · high arousal</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#0891B2"></div>pos · high arousal</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#94C5D0"></div>pos · low arousal</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#065F73"></div>neg · low arousal</div>
+  <div class="legend-dual"><div class="legend-ring"></div>appears in two pairs</div>
+</div>
+
+<div id="controls" class="ui-panel">
+  <button class="btn" id="btn-pause">Pause</button>
+  <button class="btn" id="btn-reset">Reset view</button>
+</div>
+
+<div id="tooltip">
+  <span class="tt-name" id="tt-name"></span>
+  <span class="tt-dual" id="tt-dual">appears in two pair-relations</span>
+  <div class="tt-row"><span class="tt-key">F</span><span id="tt-f"></span></div>
+  <div class="tt-row"><span class="tt-key">N</span><span id="tt-n"></span></div>
+  <div class="tt-row"><span class="tt-key">b</span><span id="tt-b"></span></div>
+  <div class="tt-row"><span class="tt-key">D</span><span id="tt-d"></span></div>
+  <div class="tt-row"><span class="tt-key">P</span><span id="tt-p"></span></div>
+  <div class="tt-row"><span class="tt-key">Quadrant</span><span id="tt-q"></span></div>
+</div>
+
+<canvas id="c"></canvas>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls }   from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { EffectComposer }  from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass }      from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass }      from 'three/addons/postprocessing/OutputPass.js';
+
+// ─── Canonical PAIRS — v0.5, April 2026 ──────────────────────────────────────
+// Six pairs the valence/arousal circumplex conflates; the tuple schema separates.
+// FEAR appears in pairs 1 and 5 (dual:true). Both instances share the same tuple.
+// Visual indicator: ring halo on both FEAR nodes; legend entry explains it.
+const PAIRS = [
+  {
+    a: { name:'fear',        F:'vector',  N:'clustered',   b:'~', D:'drifting',  P:'den2D', quadrant:'neg-high', dual:true  },
+    b: { name:'anxiety',     F:'loop',    N:'clustered',   b:'~', D:'recursive', P:'den2D', quadrant:'neg-high', dual:false }
+  },
+  {
+    a: { name:'terrified',   F:'point',   N:'contrastive', b:'#', D:'stable',    P:'med1D', quadrant:'neg-high', dual:false },
+    b: { name:'panicked',    F:'collapse',N:'clustered',   b:'~', D:'drifting',  P:'den2D', quadrant:'neg-high', dual:false }
+  },
+  {
+    a: { name:'joy',         F:'loop',    N:'clustered',   b:'∅', D:'recursive', P:'med2D', quadrant:'pos-high', dual:false },
+    b: { name:'excitement',  F:'vector',  N:'clustered',   b:'∅', D:'drifting',  P:'med2D', quadrant:'pos-high', dual:false }
+  },
+  {
+    a: { name:'content',     F:'point',   N:'isolated',    b:'∅', D:'stable',    P:'sp1D',  quadrant:'pos-low',  dual:false },
+    b: { name:'peaceful',    F:'point',   N:'gradient',    b:'∅', D:'stable',    P:'sp1D',  quadrant:'pos-low',  dual:false }
+  },
+  {
+    a: { name:'desperation', F:'collapse',N:'contrastive', b:'#', D:'terminal',  P:'den2D', quadrant:'neg-high', dual:false },
+    b: { name:'fear',        F:'vector',  N:'clustered',   b:'~', D:'drifting',  P:'den2D', quadrant:'neg-high', dual:true  }
+  },
+  {
+    a: { name:'grief',       F:'loop',    N:'clustered',   b:'~', D:'recursive', P:'den2D', quadrant:'neg-low',  dual:false },
+    b: { name:'sadness',     F:'point',   N:'isolated',    b:'∅', D:'stable',    P:'med1D', quadrant:'neg-low',  dual:false }
+  }
+];
+
+const QUAD_COLOR = {
+  'neg-high': new THREE.Color(0xF97316),
+  'pos-high': new THREE.Color(0x0891B2),
+  'pos-low':  new THREE.Color(0x94C5D0),
+  'neg-low':  new THREE.Color(0x065F73),
+};
+const QUAD_LABEL = {
+  'neg-high': 'negative · high arousal',
+  'pos-high': 'positive · high arousal',
+  'pos-low':  'positive · low arousal',
+  'neg-low':  'negative · low arousal',
+};
+
+const BG = 0xF5F3EE;
+
+// ─── Renderer ─────────────────────────────────────────────────────────────────
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, powerPreference:'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.setClearColor(BG);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(innerWidth, innerHeight);
+labelRenderer.domElement.style.position = 'absolute';
+labelRenderer.domElement.style.top = '0';
+labelRenderer.domElement.style.pointerEvents = 'none';
+document.body.appendChild(labelRenderer.domElement);
+
+// ─── Scene ────────────────────────────────────────────────────────────────────
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(BG);
+scene.fog = new THREE.FogExp2(BG, 0.007);
+
+const camera = new THREE.PerspectiveCamera(52, innerWidth/innerHeight, 0.1, 500);
+camera.position.set(0, 4, 30);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.rotateSpeed = 0.5;
+controls.minDistance = 7;
+controls.maxDistance = 80;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.18;
+controls.enablePan = false;
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.22, 0.45, 0.94);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+// ─── Node class ───────────────────────────────────────────────────────────────
+class Node {
+  constructor(pos, level=0, emotionData=null) {
+    this.position    = pos;
+    this.connections = [];
+    this.level       = level;
+    this.emotion     = emotionData;
+    this.size        = emotionData ? 1.4 : (level===0 ? 1.6 : THREE.MathUtils.randFloat(0.4,0.85));
+    this.distanceFromRoot = 0;
+  }
+  connect(other, strength=1.0) {
+    if (!this.connections.some(c => c.node===other)) {
+      this.connections.push({ node:other, strength });
+      other.connections.push({ node:this, strength });
+    }
+  }
+}
+
+// ─── Build sphere ─────────────────────────────────────────────────────────────
+function buildSphere() {
+  const nodes = [];
+  const root  = new Node(new THREE.Vector3(0,0,0), 0);
+  nodes.push(root);
+
+  const AXIS_LEN       = 19;
+  const NODES_PER_AXIS = 7;
+  const axisEndNodes   = [];
+
+  for (let a=0; a<6; a++) {
+    const phi   = Math.acos(-1 + (2*a)/6);
+    const theta = Math.PI * (1 + Math.sqrt(5)) * a;
+    const dir   = new THREE.Vector3(
+      Math.sin(phi)*Math.cos(theta),
+      Math.sin(phi)*Math.sin(theta),
+      Math.cos(phi)
+    ).normalize();
+
+    const pair = PAIRS[a];
+    let prev = root;
+
+    for (let i=1; i<=NODES_PER_AXIS; i++) {
+      const t    = i/NODES_PER_AXIS;
+      const dist = AXIS_LEN * Math.pow(t, 0.82);
+      const pos  = dir.clone().multiplyScalar(dist);
+      const n    = new Node(pos, i, i===NODES_PER_AXIS ? pair.a : null);
+      n.distanceFromRoot = dist;
+      nodes.push(n);
+      prev.connect(n, 1.0 - t*0.3);
+      prev = n;
+      if (i===NODES_PER_AXIS) axisEndNodes.push(n);
+    }
+
+    prev = root;
+    for (let i=1; i<=NODES_PER_AXIS; i++) {
+      const t    = i/NODES_PER_AXIS;
+      const dist = AXIS_LEN * Math.pow(t, 0.82);
+      const pos  = dir.clone().multiplyScalar(-dist);
+      const n    = new Node(pos, i, i===NODES_PER_AXIS ? pair.b : null);
+      n.distanceFromRoot = dist;
+      nodes.push(n);
+      prev.connect(n, 1.0 - t*0.3);
+      prev = n;
+      if (i===NODES_PER_AXIS) axisEndNodes.push(n);
+    }
+  }
+
+  const ringDists = [5, 10, 15];
+  for (const rd of ringDists) {
+    const count = Math.floor(rd * 2.2);
+    const ring  = [];
+    for (let i=0; i<count; i++) {
+      const t    = i/count;
+      const rPhi = Math.acos(2*Math.random()-1);
+      const rTh  = 2*Math.PI*t;
+      const pos  = new THREE.Vector3(
+        rd*Math.sin(rPhi)*Math.cos(rTh),
+        rd*Math.sin(rPhi)*Math.sin(rTh),
+        rd*Math.cos(rPhi)
+      );
+      const n = new Node(pos, Math.ceil(rd/5));
+      n.distanceFromRoot = rd;
+      nodes.push(n);
+      ring.push(n);
+    }
+    for (let i=0; i<ring.length; i++) ring[i].connect(ring[(i+1)%ring.length], 0.65);
+    for (const rn of ring) {
+      let closest=null, minD=Infinity;
+      for (const n of nodes) {
+        if (n===rn) continue;
+        const d = rn.position.distanceTo(n.position);
+        if (d<minD) { minD=d; closest=n; }
+      }
+      if (closest && minD<8) rn.connect(closest, 0.45);
+    }
+  }
+
+  for (let i=0; i<axisEndNodes.length; i++) {
+    const a = axisEndNodes[i];
+    const b = axisEndNodes[(i+3)%axisEndNodes.length];
+    const mid = new THREE.Vector3().lerpVectors(a.position, b.position, 0.5);
+    mid.add(new THREE.Vector3(
+      THREE.MathUtils.randFloatSpread(2.5),
+      THREE.MathUtils.randFloatSpread(2.5),
+      THREE.MathUtils.randFloatSpread(2.5)
+    ));
+    const bridge = new Node(mid, 4);
+    bridge.distanceFromRoot = new THREE.Vector3().distanceTo(mid);
+    nodes.push(bridge);
+    a.connect(bridge, 0.45);
+    bridge.connect(b, 0.45);
+  }
+
+  return { nodes, root, axisEndNodes };
+}
+
+// ─── Build Three.js geometry ──────────────────────────────────────────────────
+let network        = buildSphere();
+let nodesMesh      = null;
+let connMesh       = null;
+let pulseIntensities = null;
+let connectionPairs  = [];
+let nodeObjects      = [];
+let labelObjects     = [];
+
+const labelGroups = new THREE.Group();
+scene.add(labelGroups);
+
+const SEGS = 14;
+
+function buildGeometry() {
+  if (nodesMesh) { scene.remove(nodesMesh); nodesMesh.geometry.dispose(); nodesMesh.material.dispose(); }
+  if (connMesh)  { scene.remove(connMesh);  connMesh.geometry.dispose();  connMesh.material.dispose(); }
+  labelGroups.clear();
+  labelObjects = [];
+
+  nodeObjects      = network.nodes;
+  pulseIntensities = new Float32Array(nodeObjects.length);
+
+  const N    = nodeObjects.length;
+  const pos  = new Float32Array(N*3);
+  const sz   = new Float32Array(N);
+  const col  = new Float32Array(N*3);
+  const puls = new Float32Array(N);
+
+  const CHARCOAL = new THREE.Color(0x1C2B30);
+  const TEAL_MID = new THREE.Color(0x0891B2);
+
+  nodeObjects.forEach((n, i) => {
+    pos[i*3]   = n.position.x;
+    pos[i*3+1] = n.position.y;
+    pos[i*3+2] = n.position.z;
+    sz[i]      = n.size;
+    puls[i]    = 0;
+
+    let c;
+    if (n.emotion) {
+      c = QUAD_COLOR[n.emotion.quadrant].clone();
+    } else if (n.level===0) {
+      c = CHARCOAL.clone();
+    } else {
+      c = TEAL_MID.clone();
+      c.offsetHSL(0, THREE.MathUtils.randFloatSpread(0.05), THREE.MathUtils.randFloatSpread(0.08));
+    }
+    col[i*3]   = c.r;
+    col[i*3+1] = c.g;
+    col[i*3+2] = c.b;
+
+    if (n.emotion) {
+      const grp = new THREE.Group();
+      grp.position.copy(n.position);
+      labelGroups.add(grp);
+
+      const em  = n.emotion;
+      const div = document.createElement('div');
+      div.className = `emotion-label ${em.quadrant}`;
+      const nameEl = document.createElement('span');
+      nameEl.className = 'name' + (em.dual ? ' dual-pair' : '');
+      nameEl.textContent = em.name + (em.dual ? ' ×2' : '');
+      div.appendChild(nameEl);
+
+      const labelCSS = new CSS2DObject(div);
+      labelCSS.position.set(0, 1.1, 0);
+      grp.add(labelCSS);
+
+      labelObjects.push({ node:n, nodeIndex:i, div });
+    }
+  });
+
+  const nGeo = new THREE.BufferGeometry();
+  nGeo.setAttribute('position', new THREE.BufferAttribute(pos,  3));
+  nGeo.setAttribute('aSize',    new THREE.BufferAttribute(sz,   1));
+  nGeo.setAttribute('aColor',   new THREE.BufferAttribute(col,  3));
+  nGeo.setAttribute('aPulse',   new THREE.BufferAttribute(puls, 1));
+
+  nodesMesh = new THREE.Points(nGeo, new THREE.ShaderMaterial({
+    uniforms: { uTime:{ value:0 } },
+    vertexShader:`
+      attribute float aSize;
+      attribute vec3  aColor;
+      attribute float aPulse;
+      uniform   float uTime;
+      varying   vec3  vColor;
+      varying   float vPulse;
+      varying   float vZ;
+      void main(){
+        vColor = aColor;
+        vPulse = aPulse;
+        float breathe = 1.0 + 0.055*sin(uTime*0.85+position.x*0.28);
+        float pb      = 1.0 + vPulse*1.9;
+        vec4 mv = modelViewMatrix*vec4(position,1.0);
+        vZ = -mv.z;
+        gl_PointSize = aSize*breathe*pb*(620.0/vZ);
+        gl_Position  = projectionMatrix*mv;
+      }
+    `,
+    fragmentShader:`
+      varying vec3  vColor;
+      varying float vPulse;
+      varying float vZ;
+      void main(){
+        vec2  uv = gl_PointCoord*2.0-1.0;
+        float d  = length(uv);
+        if(d>1.0) discard;
+        float alpha = smoothstep(1.0,0.5,d);
+        float glow  = pow(1.0-d,2.8)*0.55;
+        alpha = clamp(alpha+glow,0.0,1.0);
+        vec3 pulse  = vec3(0.976,0.451,0.086);
+        vec3 fc     = mix(vColor,pulse,vPulse*0.82);
+        fc          = mix(fc,fc*1.35,vPulse*0.45);
+        float fade  = smoothstep(72.0,9.0,vZ);
+        gl_FragColor= vec4(fc,alpha*fade);
+      }
+    `,
+    transparent:true, depthWrite:false,
+    blending:THREE.NormalBlending,
+  }));
+  scene.add(nodesMesh);
+
+  const seen = new Set();
+  connectionPairs = [];
+  nodeObjects.forEach((n,ni) => {
+    n.connections.forEach(conn => {
+      const ci = nodeObjects.indexOf(conn.node);
+      if (ci===-1) return;
+      const key = `${Math.min(ni,ci)}-${Math.max(ni,ci)}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        connectionPairs.push({ a:ni, b:ci, strength:conn.strength });
+      }
+    });
+  });
+
+  const TV     = connectionPairs.length * SEGS;
+  const cPos   = new Float32Array(TV*3);
+  const cCol   = new Float32Array(TV*3);
+  const cStr   = new Float32Array(TV);
+  const cPulse = new Float32Array(TV);
+
+  connectionPairs.forEach((pair, pi) => {
+    const a = nodeObjects[pair.a].position;
+    const b = nodeObjects[pair.b].position;
+    for (let s=0; s<SEGS; s++) {
+      const idx = pi*SEGS+s;
+      const t   = s/(SEGS-1);
+      cPos[idx*3]   = a.x+(b.x-a.x)*t;
+      cPos[idx*3+1] = a.y+(b.y-a.y)*t;
+      cPos[idx*3+2] = a.z+(b.z-a.z)*t;
+      cCol[idx*3]=0.031; cCol[idx*3+1]=0.32; cCol[idx*3+2]=0.42;
+      cStr[idx]   = pair.strength;
+      cPulse[idx] = 0;
+    }
+  });
+
+  const cGeo = new THREE.BufferGeometry();
+  cGeo.setAttribute('position', new THREE.BufferAttribute(cPos,   3));
+  cGeo.setAttribute('aColor',   new THREE.BufferAttribute(cCol,   3));
+  cGeo.setAttribute('aStr',     new THREE.BufferAttribute(cStr,   1));
+  cGeo.setAttribute('aPulse',   new THREE.BufferAttribute(cPulse, 1));
+
+  const indices = [];
+  for (let pi=0; pi<connectionPairs.length; pi++)
+    for (let s=0; s<SEGS-1; s++) { const b=pi*SEGS+s; indices.push(b,b+1); }
+  cGeo.setIndex(indices);
+
+  connMesh = new THREE.LineSegments(cGeo, new THREE.ShaderMaterial({
+    uniforms:{ uTime:{ value:0 } },
+    vertexShader:`
+      attribute vec3  aColor;
+      attribute float aStr;
+      attribute float aPulse;
+      uniform   float uTime;
+      varying   vec3  vColor;
+      varying   float vStr;
+      varying   float vPulse;
+      void main(){
+        vColor=aColor; vStr=aStr; vPulse=aPulse;
+        gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);
+      }
+    `,
+    fragmentShader:`
+      varying vec3  vColor;
+      varying float vStr;
+      varying float vPulse;
+      void main(){
+        float alpha = (0.17+0.1*vStr);
+        vec3 pulse  = vec3(0.976,0.451,0.086);
+        vec3 fc     = mix(vColor,pulse,vPulse);
+        alpha       = mix(alpha,min(1.0,alpha*2.6),vPulse);
+        gl_FragColor= vec4(fc,alpha);
+      }
+    `,
+    transparent:true, depthWrite:false,
+    blending:THREE.NormalBlending,
+  }));
+  scene.add(connMesh);
+}
+
+buildGeometry();
+
+// ─── BFS pulse ────────────────────────────────────────────────────────────────
+const PULSE_SPEED   = 0.30;
+const PULSE_SUSTAIN = 0.5;
+const PULSE_FADE    = 0.38;
+const MAX_HOPS      = 9;
+let activePulses    = [];
+let clock           = 0;
+
+function firePulse(srcIdx) {
+  const N        = nodeObjects.length;
+  const hopTimes = new Float32Array(N).fill(-1);
+  hopTimes[srcIdx] = clock;
+  const queue   = [srcIdx];
+  const visited = new Uint8Array(N);
+  const depth   = new Uint8Array(N);
+  visited[srcIdx] = 1;
+  while (queue.length) {
+    const curr = queue.shift();
+    if (depth[curr]>=MAX_HOPS) continue;
+    for (const conn of nodeObjects[curr].connections) {
+      const ni = nodeObjects.indexOf(conn.node);
+      if (ni===-1||visited[ni]) continue;
+      visited[ni]  = 1;
+      depth[ni]    = depth[curr]+1;
+      hopTimes[ni] = hopTimes[curr]+PULSE_SPEED;
+      queue.push(ni);
+    }
+  }
+  activePulses.push({ hopTimes, startTime:clock });
+  if (activePulses.length>3) activePulses.shift();
+}
+
+function updatePulse() {
+  const nAttr = nodesMesh.geometry.getAttribute('aPulse');
+  const cAttr = connMesh.geometry.getAttribute('aPulse');
+  const N     = nodeObjects.length;
+  pulseIntensities.fill(0);
+
+  for (const p of activePulses) {
+    for (let i=0; i<N; i++) {
+      const ht = p.hopTimes[i];
+      if (ht<0) continue;
+      const dt = clock-ht;
+      if (dt<0) continue;
+      let intensity = 0;
+      if (dt < PULSE_SUSTAIN) {
+        intensity = Math.min(1.0, dt/0.07);
+      } else {
+        intensity = Math.max(0, 1.0-(dt-PULSE_SUSTAIN)/PULSE_FADE);
+      }
+      pulseIntensities[i] = Math.max(pulseIntensities[i], intensity);
+    }
+  }
+  for (let i=0; i<N; i++) nAttr.setX(i, pulseIntensities[i]);
+  nAttr.needsUpdate = true;
+
+  const TV = connectionPairs.length*SEGS;
+  for (let vi=0; vi<TV; vi++) {
+    const pi = Math.floor(vi/SEGS);
+    const t  = (vi%SEGS)/(SEGS-1);
+    const pA = pulseIntensities[connectionPairs[pi].a];
+    const pB = pulseIntensities[connectionPairs[pi].b];
+    cAttr.setX(vi, pA*(1-t)+pB*t);
+  }
+  cAttr.needsUpdate = true;
+
+  activePulses = activePulses.filter(p => {
+    const maxHop = p.hopTimes.reduce((mx,h)=>h>mx?h:mx,-Infinity);
+    return clock < maxHop+PULSE_SUSTAIN+PULSE_FADE+0.1;
+  });
+}
+
+// ─── Tooltip + hover ─────────────────────────────────────────────────────────
+const tooltip  = document.getElementById('tooltip');
+const ttName   = document.getElementById('tt-name');
+const ttDual   = document.getElementById('tt-dual');
+const ttF      = document.getElementById('tt-f');
+const ttN      = document.getElementById('tt-n');
+const ttB      = document.getElementById('tt-b');
+const ttD      = document.getElementById('tt-d');
+const ttP      = document.getElementById('tt-p');
+const ttQ      = document.getElementById('tt-q');
+
+function showTooltip(idx, ex, ey) {
+  const em = nodeObjects[idx].emotion;
+  if (!em) { tooltip.style.display='none'; return; }
+  ttName.textContent        = em.name;
+  ttDual.style.display      = em.dual ? 'block' : 'none';
+  ttF.textContent           = em.F;
+  ttN.textContent           = em.N;
+  ttB.textContent           = 'b' + em.b;
+  ttD.textContent           = em.D;
+  ttP.textContent           = em.P;
+  ttQ.textContent           = QUAD_LABEL[em.quadrant];
+  tooltip.className         = em.quadrant;
+  tooltip.style.display     = 'block';
+  tooltip.style.left        = (ex+16)+'px';
+  tooltip.style.top         = (ey-10)+'px';
+}
+
+canvas.addEventListener('pointermove', e => {
+  const posAttr = nodesMesh.geometry.getAttribute('position');
+  const tmp = new THREE.Vector3();
+  let bestIdx=-1, bestD=Infinity;
+  for (let i=0; i<posAttr.count; i++) {
+    tmp.fromBufferAttribute(posAttr,i).project(camera);
+    const sx=(tmp.x*0.5+0.5)*innerWidth;
+    const sy=(-tmp.y*0.5+0.5)*innerHeight;
+    const d=Math.hypot(sx-e.clientX,sy-e.clientY);
+    if(d<bestD&&d<30){bestD=d;bestIdx=i;}
+  }
+  if (bestIdx!==-1 && nodeObjects[bestIdx].emotion) {
+    showTooltip(bestIdx, e.clientX, e.clientY);
+    canvas.style.cursor='pointer';
+  } else {
+    tooltip.style.display='none';
+    canvas.style.cursor='grab';
+  }
+});
+
+// ─── Click: fire pulse ────────────────────────────────────────────────────────
+let isDragging=false, mouseDown={x:0,y:0};
+canvas.addEventListener('pointerdown',e=>{ mouseDown={x:e.clientX,y:e.clientY}; isDragging=false; });
+canvas.addEventListener('pointermove',e=>{
+  if(Math.hypot(e.clientX-mouseDown.x,e.clientY-mouseDown.y)>5) isDragging=true;
+});
+canvas.addEventListener('pointerup',e=>{
+  if(isDragging) return;
+  const posAttr = nodesMesh.geometry.getAttribute('position');
+  const tmp=new THREE.Vector3();
+  let bestIdx=-1,bestD=Infinity;
+  for(let i=0;i<posAttr.count;i++){
+    tmp.fromBufferAttribute(posAttr,i).project(camera);
+    const sx=(tmp.x*0.5+0.5)*innerWidth;
+    const sy=(-tmp.y*0.5+0.5)*innerHeight;
+    const d=Math.hypot(sx-e.clientX,sy-e.clientY);
+    if(d<bestD&&d<30){bestD=d;bestIdx=i;}
+  }
+  if(bestIdx!==-1) firePulse(bestIdx);
+});
+
+// ─── Controls ─────────────────────────────────────────────────────────────────
+let paused=false;
+document.getElementById('btn-pause').addEventListener('click',()=>{
+  paused=!paused;
+  document.getElementById('btn-pause').textContent=paused?'Play':'Pause';
+});
+document.getElementById('btn-reset').addEventListener('click',()=>controls.reset());
+
+// ─── Resize ───────────────────────────────────────────────────────────────────
+window.addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+  labelRenderer.setSize(innerWidth,innerHeight);
+  composer.setSize(innerWidth,innerHeight);
+  bloom.setSize(innerWidth,innerHeight);
+});
+
+// ─── Loop ─────────────────────────────────────────────────────────────────────
+let lastTS=performance.now();
+function animate(ts){
+  requestAnimationFrame(animate);
+  const dt=Math.min((ts-lastTS)/1000,0.05); lastTS=ts;
+  if(!paused){
+    clock+=dt;
+    controls.update();
+    nodesMesh.material.uniforms.uTime.value=clock;
+    connMesh.material.uniforms.uTime.value=clock;
+    updatePulse();
+  }
+  composer.render();
+  labelRenderer.render(scene,camera);
+}
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>

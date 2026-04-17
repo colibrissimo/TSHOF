@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotion Field — Ideasthesia as Geometry v0.5</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #F5F3EE; font-family: Inter, sans-serif; }
+  canvas { display: block; }
+
+  #ui-top { position: absolute; top: 18px; left: 18px; z-index: 10; display: flex; flex-direction: column; gap: 10px; }
+
+  .panel {
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(8,145,178,0.18);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #444;
+    font-size: 11px;
+    line-height: 1.7;
+    max-width: 210px;
+  }
+  .panel strong { display: block; color: #0891B2; font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+
+  #tooltip {
+    position: absolute;
+    pointer-events: none;
+    display: none;
+    background: rgba(245,243,238,0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(8,145,178,0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 11px;
+    line-height: 1.75;
+    max-width: 200px;
+    z-index: 100;
+    color: #333;
+  }
+  #tooltip .tt-name { font-weight: 700; font-size: 13px; color: #0891B2; display: block; margin-bottom: 3px; }
+  #tooltip.neg-high .tt-name { color: #F97316; }
+  #tooltip.neg-low  .tt-name { color: #065F73; }
+  #tooltip.pos-low  .tt-name { color: #0E7490; }
+  #tooltip .tt-key  { color: #888; font-size: 10px; margin-right: 4px; }
+
+  #legend {
+    position: absolute; top: 18px; right: 18px; z-index: 10;
+  }
+  #legend .panel { min-width: 170px; }
+  .leg-row { display: flex; align-items: center; gap: 7px; margin-bottom: 2px; color: #555; font-size: 11px; }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  #controls-bar {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    z-index: 10; display: flex; gap: 8px; align-items: center;
+  }
+  .btn {
+    background: transparent; color: #0891B2;
+    border: 1px solid rgba(8,145,178,0.3);
+    padding: 6px 14px; border-radius: 6px;
+    cursor: pointer; font-size: 11px; font-weight: 500;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn:hover { background: rgba(8,145,178,0.1); border-color: rgba(8,145,178,0.6); }
+  .btn.active { background: rgba(8,145,178,0.18); border-color: #0891B2; color: #fff; }
+
+  #field-slider-wrap {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(245,243,238,0.92); backdrop-filter: blur(10px);
+    border: 1px solid rgba(8,145,178,0.18); border-radius: 6px;
+    padding: 6px 12px; font-size: 11px; color: #555;
+  }
+  #field-slider { width: 90px; accent-color: #0891B2; cursor: pointer; }
+
+  #axis-labels { position: absolute; pointer-events: none; z-index: 5; }
+  .ax-label {
+    position: absolute; font-size: 10px; color: rgba(8,145,178,0.45);
+    font-style: italic; display: none;
+  }
+
+  #info-sidebar {
+    position: absolute; top: 18px; right: 18px; z-index: 15;
+    display: none; width: 220px;
+  }
+  #info-sidebar .panel { max-width: 220px; }
+  #info-sidebar .si-name { font-size: 15px; font-weight: 700; color: #0891B2; margin-bottom: 6px; }
+  #info-sidebar .si-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(8,145,178,0.1); padding: 3px 0; }
+  #info-sidebar .si-key { color: #888; font-size: 10px; }
+  #info-sidebar .si-val { color: #1a1a1a; font-size: 11px; }
+  #info-sidebar .si-close { cursor: pointer; float: right; color: #F97316; font-size: 13px; margin-left: 8px; }
+  #info-sidebar .si-desc { margin-top: 8px; font-size: 10px; color: #666; line-height: 1.6; border-top: 1px solid rgba(8,145,178,0.1); padding-top: 6px; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="ui-top">
+  <div class="panel">
+    <strong>Emotion Field</strong>
+    Drag to rotate · Scroll to zoom<br>
+    Hover a particle to see its tuple<br>
+    Click to isolate · <kbd>Space</kbd> freeze<br>
+    <kbd>P</kbd> toggle Z-depth · <kbd>V</kbd> axes
+  </div>
+</div>
+
+<div id="legend">
+  <div class="panel">
+    <strong>Valence · Arousal</strong>
+    <div class="leg-row"><div class="leg-dot" style="background:#F97316"></div>neg · high arousal</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#0891B2"></div>pos · high arousal</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#94C5D0"></div>pos · low arousal</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#065F73"></div>neg · low arousal</div>
+  </div>
+</div>
+
+<div id="info-sidebar">
+  <div class="panel">
+    <span class="si-close" id="si-close">✕</span>
+    <div class="si-name" id="si-name"></div>
+    <div class="si-row"><span class="si-key">F — Form</span><span class="si-val" id="si-f"></span></div>
+    <div class="si-row"><span class="si-key">N — Neighbourhood</span><span class="si-val" id="si-n"></span></div>
+    <div class="si-row"><span class="si-key">b — Boundary</span><span class="si-val" id="si-b"></span></div>
+    <div class="si-row"><span class="si-key">D — Dynamics</span><span class="si-val" id="si-d"></span></div>
+    <div class="si-row"><span class="si-key">P — Packing-Dim</span><span class="si-val" id="si-p"></span></div>
+    <div class="si-row"><span class="si-key">Quadrant</span><span class="si-val" id="si-q"></span></div>
+    <div class="si-desc" id="si-desc"></div>
+  </div>
+</div>
+
+<div id="tooltip">
+  <span class="tt-name" id="tt-name"></span>
+  <div><span class="tt-key">F</span><span id="tt-f"></span></div>
+  <div><span class="tt-key">N</span><span id="tt-n"></span></div>
+  <div><span class="tt-key">b</span><span id="tt-b"></span></div>
+  <div><span class="tt-key">D</span><span id="tt-d"></span></div>
+  <div><span class="tt-key">P</span><span id="tt-p"></span></div>
+</div>
+
+<div id="controls-bar">
+  <button class="btn" id="btn-pause">Pause</button>
+  <button class="btn" id="btn-flat">2D / 3D</button>
+  <button class="btn" id="btn-axes">Axes</button>
+  <button class="btn" id="btn-reset">Reset view</button>
+  <div id="field-slider-wrap">
+    Field strength
+    <input type="range" id="field-slider" min="0" max="100" value="40">
+  </div>
+</div>
+
+<canvas id="c"></canvas>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+// ─── Perlin noise (inline, no CDN dependency) ────────────────────────────────
+const _perm = new Uint8Array(512);
+(function() {
+  const p = new Uint8Array(256);
+  for (let i = 0; i < 256; i++) p[i] = i;
+  for (let i = 255; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = p[i]; p[i] = p[j]; p[j] = tmp;
+  }
+  for (let i = 0; i < 512; i++) _perm[i] = p[i & 255];
+})();
+
+function _nfade(n) { return n * n * n * (n * (n * 6 - 15) + 10); }
+function _nlerp(a, b, n) { return a + n * (b - a); }
+function _ngrad(hash, x, y, z) {
+  const h = hash & 15;
+  const uu = h < 8 ? x : y;
+  const vv = h < 4 ? y : (h === 12 || h === 14 ? x : z);
+  return ((h & 1) ? -uu : uu) + ((h & 2) ? -vv : vv);
+}
+function noise3(x, y, z) {
+  const X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
+  x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
+  const u = _nfade(x), v = _nfade(y), w = _nfade(z);
+  const A = _perm[X]+Y, AA = _perm[A]+Z, AB = _perm[A+1]+Z;
+  const B = _perm[X+1]+Y, BA = _perm[B]+Z, BB = _perm[B+1]+Z;
+  return _nlerp(
+    _nlerp(_nlerp(_ngrad(_perm[AA], x, y, z),   _ngrad(_perm[BA], x-1, y, z),   u),
+           _nlerp(_ngrad(_perm[AB], x, y-1, z),  _ngrad(_perm[BB], x-1, y-1, z), u), v),
+    _nlerp(_nlerp(_ngrad(_perm[AA+1], x, y, z-1),  _ngrad(_perm[BA+1], x-1, y, z-1),   u),
+           _nlerp(_ngrad(_perm[AB+1], x, y-1, z-1), _ngrad(_perm[BB+1], x-1, y-1, z-1), u), v), w);
+}
+
+// ─── Canonical emotion data (v0.5 corrected) ─────────────────────────────────
+const SCALE = 8;
+const packingZ = { sp0D: -2, sp1D: -1, med1D: 0, med2D: 0.5, den2D: 1.5, den3D: 2.5 };
+const particleCount = { sp0D: 1, sp1D: 4, med1D: 3, med2D: 5, den2D: 10, den3D: 16 };
+const quadrantColor = {
+  'neg-high': 0xF97316,
+  'pos-high': 0x0891B2,
+  'pos-low':  0x94C5D0,
+  'neg-low':  0x4fa8b8
+};
+const quadrantLabel = {
+  'neg-high': 'negative · high arousal',
+  'pos-high': 'positive · high arousal',
+  'pos-low':  'positive · low arousal',
+  'neg-low':  'negative · low arousal'
+};
+
+const DESCRIPTIONS = {
+  fear: "F:vector D:drifting — directed, moves continuously. Does not stop, it redirects. Valence/arousal cannot separate this from desperation.",
+  anxiety: "F:loop D:recursive — self-returning. Comes back to where it started. Same quadrant as fear but structurally opposite trail.",
+  terrified: "F:point D:stable — frozen. High-pressure, bounded, does not move. Contrastive boundary: identity held against neighbours.",
+  panicked: "F:collapse D:drifting — contracts and spreads chaotically. Different from terrified despite the same quadrant.",
+  joy: "F:loop D:recursive — warm orbit. Returns to itself. Dense cluster. High arousal, positive.",
+  excitement: "F:vector D:drifting — forward arc, does not return. Same quadrant as joy, separated by F and D alone.",
+  content: "F:point D:stable — settled. Isolated: no diffusion into neighbours. Form-identical to peaceful.",
+  peaceful: "F:point D:stable — settled. Gradient: diffuses into surroundings. The only separation from content is N.",
+  desperation: "F:collapse D:terminal — contracts, dies, respawns. No continuation. The tuple separates this from fear; valence/arousal cannot.",
+  grief: "F:loop D:recursive — heavy orbit. Negative low arousal. Separated from sadness by F and D.",
+  sadness: "F:point D:stable — still. Isolated. Low arousal. Form-identical to content but negative valence."
+};
+
+const EMOTIONS = [
+  { name:'fear',        F:'vector',     N:'clustered',  b:'',       D:'drifting',  P:'den2D',  pc1:-0.70, pc2: 0.60, quadrant:'neg-high', mass:0.85 },
+  { name:'anxiety',     F:'loop',       N:'clustered',  b:'',       D:'recursive', P:'den2D',  pc1:-0.50, pc2: 0.50, quadrant:'neg-high', mass:0.75 },
+  { name:'terrified',   F:'point',      N:'contrastive',b:'sharp',  D:'stable',    P:'med1D',  pc1:-0.82, pc2: 0.82, quadrant:'neg-high', mass:0.90 },
+  { name:'panicked',    F:'collapse',   N:'clustered',  b:'',       D:'drifting',  P:'den2D',  pc1:-0.65, pc2: 0.74, quadrant:'neg-high', mass:0.60 },
+  { name:'joy',         F:'loop',       N:'clustered',  b:'',       D:'recursive', P:'med2D',  pc1: 0.80, pc2: 0.70, quadrant:'pos-high', mass:0.80 },
+  { name:'excitement',  F:'vector',     N:'clustered',  b:'',       D:'drifting',  P:'med2D',  pc1: 0.65, pc2: 0.60, quadrant:'pos-high', mass:0.72 },
+  { name:'content',     F:'point',      N:'isolated',   b:'',       D:'stable',    P:'sp1D',   pc1: 0.60, pc2:-0.52, quadrant:'pos-low',  mass:0.95 },
+  { name:'peaceful',    F:'point',      N:'gradient',   b:'soft',   D:'stable',    P:'sp1D',   pc1: 0.50, pc2:-0.62, quadrant:'pos-low',  mass:0.88 },
+  { name:'desperation', F:'collapse',   N:'contrastive',b:'sharp',  D:'terminal',  P:'den2D',  pc1:-0.85, pc2: 0.65, quadrant:'neg-high', mass:0.40 },
+  { name:'grief',       F:'loop',       N:'clustered',  b:'',       D:'recursive', P:'den2D',  pc1:-0.62, pc2:-0.52, quadrant:'neg-low',  mass:0.70 },
+  { name:'sadness',     F:'point',      N:'isolated',   b:'',       D:'stable',    P:'med1D',  pc1:-0.50, pc2:-0.62, quadrant:'neg-low',  mass:0.92 },
+];
+
+// ─── Renderer / Scene setup ───────────────────────────────────────────────────
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xF5F3EE);
+scene.fog = new THREE.FogExp2(0xF5F3EE, 0.018);
+
+const camera = new THREE.PerspectiveCamera(52, innerWidth / innerHeight, 0.1, 300);
+camera.position.set(0, 4, 28);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.rotateSpeed = 0.5;
+controls.minDistance = 6;
+controls.maxDistance = 60;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.12;
+controls.enablePan = false;
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.12, 0.4, 0.95);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+// ─── Axis grid lines ──────────────────────────────────────────────────────────
+let axesVisible = false;
+const axisGroup = new THREE.Group();
+scene.add(axisGroup);
+
+function buildAxes() {
+  axisGroup.clear();
+  const mat = new THREE.LineBasicMaterial({ color: 0x0891B2, transparent: true, opacity: 0.15 });
+  const gridMat = new THREE.LineBasicMaterial({ color: 0x0891B2, transparent: true, opacity: 0.05 });
+  const R = 12;
+  // X axis
+  const xg = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-R,0,0), new THREE.Vector3(R,0,0)]);
+  axisGroup.add(new THREE.Line(xg, mat));
+  // Y axis
+  const yg = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-R,0), new THREE.Vector3(0,R,0)]);
+  axisGroup.add(new THREE.Line(yg, mat));
+  // grid
+  for (let i = -R; i <= R; i += 3) {
+    if (i === 0) continue;
+    const hg = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-R,i,0), new THREE.Vector3(R,i,0)]);
+    const vg = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(i,-R,0), new THREE.Vector3(i,R,0)]);
+    axisGroup.add(new THREE.Line(hg, gridMat));
+    axisGroup.add(new THREE.Line(vg, gridMat));
+  }
+}
+buildAxes();
+axisGroup.visible = false;
+
+// ─── Particle system ──────────────────────────────────────────────────────────
+let particles = [];
+let flatMode = false;
+let fieldStrength = 0.40;
+let paused = false;
+let clock = 0;
+let isolatedEmotion = null;
+
+class Particle {
+  constructor(emotion, index) {
+    this.emotion = emotion;
+    this.index = index;
+    const spread = (particleCount[emotion.P] > 1) ? 0.35 : 0;
+    const baseX = emotion.pc1 * SCALE;
+    const baseY = emotion.pc2 * SCALE;
+    const baseZ = flatMode ? 0 : packingZ[emotion.P] * 1.8;
+    this.origin = new THREE.Vector3(
+      baseX + (Math.random() - 0.5) * spread,
+      baseY + (Math.random() - 0.5) * spread,
+      baseZ + (Math.random() - 0.5) * spread * 0.5
+    );
+    this.pos = this.origin.clone();
+    this.vel = new THREE.Vector3(
+      (Math.random() - 0.5) * 0.05,
+      (Math.random() - 0.5) * 0.05,
+      (Math.random() - 0.5) * 0.02
+    );
+    // F=vector: assign a direction
+    if (emotion.F === 'vector' || emotion.F === 'collapse') {
+      const angle = Math.random() * Math.PI * 2;
+      this.direction = new THREE.Vector3(Math.cos(angle), Math.sin(angle), 0).normalize();
+    }
+    // F=loop: orbit angle
+    if (emotion.F === 'loop') {
+      this.orbitAngle = Math.random() * Math.PI * 2;
+      this.orbitRadius = 0.25 + Math.random() * 0.15;
+    }
+    this.trail = [];
+    this.trailLength = { point: 6, vector: 22, loop: 30, convergence: 20, collapse: 18 }[emotion.F] || 12;
+    this.age = Math.random() * 200;
+    this.lifetime = this.getLifetime();
+    this.alive = true;
+    this.opacity = 1.0;
+    this.respawnTimer = 0;
+  }
+
+  getLifetime() {
+    const base = { stable: 999999, recursive: 999999, drifting: 300 + Math.random() * 200, terminal: 80 + Math.random() * 60 };
+    return base[this.emotion.D] || 400;
+  }
+
+  getDamping() {
+    return { stable: 0.97, recursive: 0.94, drifting: 0.92, terminal: 0.85 }[this.emotion.D] || 0.93;
+  }
+
+  update(dt, allParticles) {
+    if (!this.alive) {
+      this.respawnTimer -= dt * 60;
+      if (this.respawnTimer <= 0) this.respawn();
+      return;
+    }
+    this.age++;
+
+    // Field force (simplex noise)
+    const sc = 0.18;
+    const t = clock * 0.18;
+    const nx = noise3(this.pos.x * sc, this.pos.y * sc, t);
+    const ny = noise3(this.pos.x * sc + 100, this.pos.y * sc, t);
+    const nz = noise3(this.pos.x * sc, this.pos.y * sc + 100, t + 50);
+    const field = new THREE.Vector3(nx, ny, nz * 0.4).multiplyScalar(fieldStrength / this.emotion.mass);
+    if (em.F !== 'point') this.vel.add(field.multiplyScalar(0.004));
+
+    // F-specific velocity additions
+    const em = this.emotion;
+    if (em.F === 'vector') {
+      this.vel.addScaledVector(this.direction, 0.006 / this.emotion.mass);
+    } else if (em.F === 'loop') {
+      this.orbitAngle += 0.025 / this.emotion.mass;
+      const target = new THREE.Vector3(
+        this.origin.x + Math.cos(this.orbitAngle) * this.orbitRadius,
+        this.origin.y + Math.sin(this.orbitAngle) * this.orbitRadius,
+        this.origin.z
+      );
+      const toTarget = target.clone().sub(this.pos).multiplyScalar(0.08);
+      this.vel.add(toTarget);
+    } else if (em.F === 'point') {
+      const micro = new THREE.Vector3(
+        Math.sin(clock * 0.7 + this.index * 1.3) * 0.003,
+        Math.cos(clock * 0.5 + this.index * 0.9) * 0.003,
+        0
+      );
+      this.vel.add(micro);
+    } else if (em.F === 'collapse') {
+      // contract toward origin as it ages
+      const toOrigin = this.origin.clone().sub(this.pos).multiplyScalar(0.01);
+      this.vel.add(toOrigin);
+      this.vel.multiplyScalar(0.96);
+    }
+
+    // D=recursive: spring back toward origin
+    if (em.D === 'recursive') {
+      const toOrigin = this.origin.clone().sub(this.pos).multiplyScalar(0.012);
+      this.vel.add(toOrigin);
+    }
+
+    // N forces
+    if (em.N === 'clustered') {
+      // attract to same-quadrant particles
+      let cohesion = new THREE.Vector3();
+      let count = 0;
+      for (const p of allParticles) {
+        if (p === this || !p.alive) continue;
+        if (p.emotion.quadrant !== em.quadrant) continue;
+        const d = this.pos.distanceTo(p.pos);
+        if (d < 2.5 && d > 0.01) {
+          cohesion.addScaledVector(p.pos.clone().sub(this.pos), 0.0008 / d);
+          count++;
+        }
+      }
+      if (count > 0) this.vel.add(cohesion);
+    } else if (em.N === 'contrastive') {
+      // repel from all others
+      for (const p of allParticles) {
+        if (p === this || !p.alive) continue;
+        const d = this.pos.distanceTo(p.pos);
+        if (d < 1.8 && d > 0.01) {
+          const repel = this.pos.clone().sub(p.pos).normalize().multiplyScalar(0.002 / d);
+          this.vel.add(repel);
+        }
+      }
+    } else if (em.N === 'gradient') {
+      // diffuse — low bias toward neighbours with reduced resistance
+      let drift = new THREE.Vector3();
+      for (const p of allParticles) {
+        if (p === this || !p.alive) continue;
+        const d = this.pos.distanceTo(p.pos);
+        if (d < 3.0 && d > 0.3) {
+          drift.addScaledVector(p.pos.clone().sub(this.pos), 0.0015 / d);
+        }
+      }
+      this.vel.add(drift);
+    }
+    // N=isolated: no additional force
+
+    // Damping
+    this.vel.multiplyScalar(this.getDamping());
+
+    // Clamp velocity
+    const maxV = em.F === 'point' ? 0.04 : 0.12;
+    if (this.vel.length() > maxV) this.vel.setLength(maxV);
+
+    // Advance position
+    this.pos.add(this.vel);
+
+    // Keep in bounds (soft)
+    const bound = 14;
+    if (Math.abs(this.pos.x) > bound) this.vel.x *= -0.5;
+    if (Math.abs(this.pos.y) > bound) this.vel.y *= -0.5;
+    if (Math.abs(this.pos.z) > 4) this.vel.z *= -0.5;
+
+    // Trail
+    this.trail.push(this.pos.clone());
+    if (this.trail.length > this.trailLength) this.trail.shift();
+
+    // Lifetime check
+    if (em.D === 'terminal') {
+      if (this.age >= this.lifetime) {
+        this.opacity = Math.max(0, this.opacity - 0.06);
+        if (this.opacity <= 0) {
+          this.alive = false;
+          this.respawnTimer = 40 + Math.random() * 60;
+          this.trail = [];
+        }
+      }
+    } else if (em.D === 'drifting') {
+      if (this.age > this.lifetime) this.age = 0;
+      this.opacity = 1.0;
+    }
+
+    // Wrap vector particles
+    if (em.F === 'vector' && this.pos.distanceTo(this.origin) > 6) {
+      this.pos.copy(this.origin);
+      this.trail = [];
+      this.vel.copy(this.direction.clone().multiplyScalar(0.03));
+    }
+  }
+
+  respawn() {
+    const spread = particleCount[this.emotion.P] > 1 ? 0.35 : 0;
+    const baseX = this.emotion.pc1 * SCALE;
+    const baseY = this.emotion.pc2 * SCALE;
+    const baseZ = flatMode ? 0 : packingZ[this.emotion.P] * 1.8;
+    this.origin.set(
+      baseX + (Math.random()-0.5)*spread,
+      baseY + (Math.random()-0.5)*spread,
+      baseZ + (Math.random()-0.5)*spread*0.5
+    );
+    this.pos.copy(this.origin);
+    this.vel.set(0,0,0);
+    this.age = 0;
+    this.lifetime = this.getLifetime();
+    this.alive = true;
+    this.opacity = 0;
+    this.trail = [];
+  }
+}
+
+// Build particles
+function buildParticles() {
+  particles = [];
+  for (const em of EMOTIONS) {
+    const count = particleCount[em.P];
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle(em, i));
+    }
+  }
+}
+buildParticles();
+
+// ─── THREE.js geometry for particles + trails ─────────────────────────────────
+// Points for particles
+const maxParticles = particles.length;
+const pPositions = new Float32Array(maxParticles * 3);
+const pColors = new Float32Array(maxParticles * 3);
+const pSizes = new Float32Array(maxParticles);
+const pAlphas = new Float32Array(maxParticles);
+
+const pGeo = new THREE.BufferGeometry();
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+pGeo.setAttribute('aColor', new THREE.BufferAttribute(pColors, 3));
+pGeo.setAttribute('aSize', new THREE.BufferAttribute(pSizes, 1));
+pGeo.setAttribute('aAlpha', new THREE.BufferAttribute(pAlphas, 1));
+
+const pMat = new THREE.ShaderMaterial({
+  uniforms: { uTime: { value: 0 } },
+  vertexShader: `
+    attribute vec3 aColor;
+    attribute float aSize;
+    attribute float aAlpha;
+    varying vec3 vColor;
+    varying float vAlpha;
+    varying float vZ;
+    void main() {
+      vColor = aColor; vAlpha = aAlpha;
+      vec4 mv = modelViewMatrix * vec4(position, 1.0);
+      vZ = -mv.z;
+      gl_PointSize = aSize * (520.0 / vZ);
+      gl_Position = projectionMatrix * mv;
+    }
+  `,
+  fragmentShader: `
+    varying vec3 vColor;
+    varying float vAlpha;
+    varying float vZ;
+    void main() {
+      vec2 uv = gl_PointCoord * 2.0 - 1.0;
+      float d = length(uv);
+      if (d > 1.0) discard;
+      float core = smoothstep(1.0, 0.2, d);
+      float glow = pow(1.0 - d, 2.2) * 0.6;
+      float alpha = clamp(core + glow, 0.0, 1.0) * vAlpha;
+      float fade = smoothstep(55.0, 8.0, vZ);
+      gl_FragColor = vec4(vColor, alpha * fade);
+    }
+  `,
+  transparent: true, depthWrite: false, blending: THREE.NormalBlending
+});
+
+const pMesh = new THREE.Points(pGeo, pMat);
+scene.add(pMesh);
+
+// Trail lines — one line object per particle
+const trailMeshes = particles.map(p => {
+  const geo = new THREE.BufferGeometry();
+  const maxT = p.trailLength + 1;
+  const pos = new Float32Array(maxT * 3);
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const c = new THREE.Color(quadrantColor[p.emotion.quadrant]);
+  const mat = new THREE.LineBasicMaterial({
+    color: c, transparent: true, opacity: 0.35,
+    depthWrite: false, blending: THREE.NormalBlending
+  });
+  const line = new THREE.Line(geo, mat);
+  scene.add(line);
+  return line;
+});
+
+// Particle size by P
+const sizeMap = { sp0D: 1.8, sp1D: 2.2, med1D: 2.8, med2D: 3.2, den2D: 2.5, den3D: 2.0 };
+
+// ─── Label sprites ────────────────────────────────────────────────────────────
+// We use CSS2DRenderer via DIVs positioned manually each frame
+const labelDivs = {};
+EMOTIONS.forEach(em => {
+  const div = document.createElement('div');
+  div.style.cssText = `
+    position: absolute; pointer-events: none; user-select: none;
+    font-family: Inter, sans-serif; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.03em; white-space: nowrap;
+    padding: 2px 7px; border-radius: 4px;
+    background: rgba(245,243,238,0.88); backdrop-filter: blur(4px);
+    border: 1px solid; transform: translateX(-50%) translateY(-180%);
+  `;
+  const isNegHigh = em.quadrant === 'neg-high';
+  div.style.color = isNegHigh ? '#F97316' : em.quadrant === 'neg-low' ? '#065F73' : em.quadrant === 'pos-low' ? '#0E7490' : '#0891B2';
+  div.style.borderColor = isNegHigh ? 'rgba(249,115,22,0.25)' : 'rgba(8,145,178,0.18)';
+  div.textContent = em.name;
+  document.body.appendChild(div);
+  labelDivs[em.name] = div;
+});
+
+// ─── Hover / click detection ──────────────────────────────────────────────────
+const tooltip = document.getElementById('tooltip');
+const ttName = document.getElementById('tt-name');
+const ttF = document.getElementById('tt-f');
+const ttN = document.getElementById('tt-n');
+const ttB = document.getElementById('tt-b');
+const ttD = document.getElementById('tt-d');
+const ttP = document.getElementById('tt-p');
+
+function showTooltip(em, ex, ey) {
+  ttName.textContent = em.name;
+  ttF.textContent = em.F; ttN.textContent = em.N;
+  ttB.textContent = em.b || '—'; ttD.textContent = em.D; ttP.textContent = em.P;
+  tooltip.className = em.quadrant;
+  tooltip.style.display = 'block';
+  tooltip.style.left = (ex + 16) + 'px';
+  tooltip.style.top = (ey - 10) + 'px';
+}
+
+const sidebar = document.getElementById('info-sidebar');
+const siName = document.getElementById('si-name');
+const siF = document.getElementById('si-f'); const siN = document.getElementById('si-n');
+const siB = document.getElementById('si-b'); const siD = document.getElementById('si-d');
+const siP = document.getElementById('si-p'); const siQ = document.getElementById('si-q');
+const siDesc = document.getElementById('si-desc');
+
+document.getElementById('si-close').addEventListener('click', () => {
+  sidebar.style.display = 'none';
+  document.getElementById('legend').style.display = '';
+  isolatedEmotion = null;
+});
+
+function getNearestEmotion(cx, cy) {
+  const tmp = new THREE.Vector3();
+  let bestEm = null, bestD = Infinity;
+  const seen = new Set();
+  for (const p of particles) {
+    if (!p.alive) continue;
+    if (seen.has(p.emotion.name)) continue;
+    tmp.copy(p.pos).project(camera);
+    const sx = (tmp.x * 0.5 + 0.5) * innerWidth;
+    const sy = (-tmp.y * 0.5 + 0.5) * innerHeight;
+    const d = Math.hypot(sx - cx, sy - cy);
+    if (d < bestD) { bestD = d; bestEm = p.emotion; }
+    seen.add(p.emotion.name);
+  }
+  return bestD < 40 ? bestEm : null;
+}
+
+let isDragging = false, mouseDown = { x: 0, y: 0 };
+canvas.addEventListener('pointerdown', e => { mouseDown.x = e.clientX; mouseDown.y = e.clientY; isDragging = false; });
+canvas.addEventListener('pointermove', e => {
+  if (Math.hypot(e.clientX - mouseDown.x, e.clientY - mouseDown.y) > 5) isDragging = true;
+  const em = getNearestEmotion(e.clientX, e.clientY);
+  if (em) { showTooltip(em, e.clientX, e.clientY); canvas.style.cursor = 'pointer'; }
+  else { tooltip.style.display = 'none'; canvas.style.cursor = 'grab'; }
+});
+canvas.addEventListener('pointerup', e => {
+  if (isDragging) return;
+  const em = getNearestEmotion(e.clientX, e.clientY);
+  if (em) {
+    isolatedEmotion = em.name;
+    siName.textContent = em.name;
+    siName.style.color = em.quadrant === 'neg-high' ? '#F97316' : '#0891B2';
+    siF.textContent = em.F; siN.textContent = em.N;
+    siB.textContent = em.b || 'none'; siD.textContent = em.D;
+    siP.textContent = em.P; siQ.textContent = quadrantLabel[em.quadrant];
+    siDesc.textContent = DESCRIPTIONS[em.name] || '';
+    sidebar.style.display = 'block';
+    document.getElementById('legend').style.display = 'none';
+    tooltip.style.display = 'none';
+  }
+});
+canvas.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+
+// ─── Controls ─────────────────────────────────────────────────────────────────
+document.getElementById('btn-pause').addEventListener('click', function() {
+  paused = !paused;
+  this.textContent = paused ? 'Play' : 'Pause';
+  this.classList.toggle('active', paused);
+  controls.autoRotate = !paused;
+});
+document.getElementById('btn-flat').addEventListener('click', function() {
+  flatMode = !flatMode;
+  this.classList.toggle('active', flatMode);
+  this.textContent = flatMode ? '3D view' : '2D / 3D';
+  buildParticles();
+  trailMeshes.forEach(l => { l.geometry.getAttribute('position').array.fill(0); });
+});
+document.getElementById('btn-axes').addEventListener('click', function() {
+  axesVisible = !axesVisible;
+  axisGroup.visible = axesVisible;
+  this.classList.toggle('active', axesVisible);
+});
+document.getElementById('btn-reset').addEventListener('click', () => controls.reset());
+document.getElementById('field-slider').addEventListener('input', function() {
+  fieldStrength = this.value / 100;
+});
+
+window.addEventListener('keydown', e => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    paused = !paused;
+    controls.autoRotate = !paused;
+    document.getElementById('btn-pause').textContent = paused ? 'Play' : 'Pause';
+    document.getElementById('btn-pause').classList.toggle('active', paused);
+  }
+  if (e.key === 'p' || e.key === 'P') document.getElementById('btn-flat').click();
+  if (e.key === 'v' || e.key === 'V') document.getElementById('btn-axes').click();
+});
+
+// ─── Label positioning ────────────────────────────────────────────────────────
+// Find the "centre of mass" particle per emotion for label placement
+function updateLabels() {
+  const tmp = new THREE.Vector3();
+  const emotionPos = {};
+  for (const p of particles) {
+    if (!p.alive) continue;
+    if (!emotionPos[p.emotion.name]) emotionPos[p.emotion.name] = { sum: new THREE.Vector3(), count: 0 };
+    emotionPos[p.emotion.name].sum.add(p.pos);
+    emotionPos[p.emotion.name].count++;
+  }
+  for (const em of EMOTIONS) {
+    const div = labelDivs[em.name];
+    const ep = emotionPos[em.name];
+    if (!ep) { div.style.display = 'none'; continue; }
+    const avgPos = ep.sum.clone().divideScalar(ep.count);
+    tmp.copy(avgPos).project(camera);
+    const sx = (tmp.x * 0.5 + 0.5) * innerWidth;
+    const sy = (-tmp.y * 0.5 + 0.5) * innerHeight;
+    if (tmp.z > 1) { div.style.display = 'none'; continue; }
+    div.style.display = 'block';
+    div.style.left = sx + 'px';
+    div.style.top = sy + 'px';
+    const isolated = isolatedEmotion !== null;
+    div.style.opacity = isolated ? (em.name === isolatedEmotion ? '1' : '0.15') : '1';
+  }
+}
+
+// ─── Render loop ──────────────────────────────────────────────────────────────
+let lastTS = performance.now();
+
+function animate(ts) {
+  requestAnimationFrame(animate);
+  const dt = Math.min((ts - lastTS) / 1000, 0.05);
+  lastTS = ts;
+
+  if (!paused) {
+    clock += dt;
+    controls.update();
+
+    // Update particles
+    for (const p of particles) p.update(dt, particles);
+
+    // Update geometry
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      const c = new THREE.Color(quadrantColor[p.emotion.quadrant]);
+      // Dim non-isolated
+      const isolated = isolatedEmotion !== null && p.emotion.name !== isolatedEmotion;
+      const alpha = isolated ? 0.06 : p.alive ? p.opacity : 0;
+
+      pPositions[i*3]   = p.pos.x;
+      pPositions[i*3+1] = p.pos.y;
+      pPositions[i*3+2] = p.pos.z;
+      pColors[i*3]   = c.r;
+      pColors[i*3+1] = c.g;
+      pColors[i*3+2] = c.b;
+      pSizes[i] = sizeMap[p.emotion.P] || 2.5;
+      pAlphas[i] = alpha;
+
+      // Trail
+      const line = trailMeshes[i];
+      const trailPos = line.geometry.getAttribute('position').array;
+      const trail = p.trail;
+      const maxT = p.trailLength + 1;
+      // pad with current pos if trail too short
+      for (let t = 0; t < maxT; t++) {
+        const src = trail[t] || p.pos;
+        trailPos[t*3] = src.x; trailPos[t*3+1] = src.y; trailPos[t*3+2] = src.z;
+      }
+      line.geometry.getAttribute('position').needsUpdate = true;
+      line.geometry.setDrawRange(0, Math.max(2, trail.length));
+      line.material.opacity = isolated ? 0.03 : (p.alive ? 0.28 * p.opacity : 0);
+    }
+
+    pGeo.getAttribute('position').needsUpdate = true;
+    pGeo.getAttribute('aColor').needsUpdate = true;
+    pGeo.getAttribute('aSize').needsUpdate = true;
+    pGeo.getAttribute('aAlpha').needsUpdate = true;
+
+    pMat.uniforms.uTime.value = clock;
+    updateLabels();
+  } else {
+    controls.update();
+  }
+
+  composer.render();
+}
+
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  composer.setSize(innerWidth, innerHeight);
+  bloom.setSize(innerWidth, innerHeight);
+});
+
+animate(performance.now());
+</script>
+</body>
+</html>

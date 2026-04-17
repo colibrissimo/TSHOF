@@ -1,0 +1,7 @@
+"Emotion","F","N","D","P","Quadrant"
+"fear","vector","clustered","drifting","den2D","neg-high"
+"anxiety","loop","clustered","recursive","den2D","neg-high"
+"content","point","isolated","stable","sp1D","pos-low"
+"peaceful","point","gradient","stable","sp1D","pos-low"
+"desperation","collapse","contrastive","terminal","den2D","neg-high"
+"…","…","…","…","…","…"

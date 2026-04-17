@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reprise, Not Crisis Ltd. — Temporary Office of Pattern Affairs</title>
+  <meta name="description" content="A project hub for Ideasthesia as Geometry and its support documents, issued under the absurdly dignified authority of Reprise, Not Crisis Ltd." />
+  <style>
+    :root {
+      --teal: #0891B2;
+      --teal-dark: #066A84;
+      --teal-light: #B2E4EF;
+      --orange: #F97316;
+      --orange-faint: #FEF0E4;
+      --bg: #FAFAF8;
+      --paper: #FFFFFF;
+      --text: #1A1A1A;
+      --muted: #555;
+      --rule: #D8D8D8;
+      --shadow: 0 12px 30px rgba(0,0,0,0.07);
+      --radius: 16px;
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f8faf9 0%, #fbfaf7 100%);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 2rem 1.2rem 4rem;
+    }
+
+    .hero {
+      background: radial-gradient(circle at top right, rgba(249,115,22,0.12), transparent 34%),
+                  radial-gradient(circle at top left, rgba(8,145,178,0.12), transparent 40%),
+                  var(--paper);
+      border: 1px solid rgba(8,145,178,0.15);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 2.25rem 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      background: rgba(8,145,178,0.08);
+      border: 1px solid rgba(8,145,178,0.14);
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--teal-dark);
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    .lede {
+      max-width: 56rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .motto-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+      margin-top: 1.2rem;
+    }
+
+    .motto, .internal {
+      border-left: 4px solid var(--orange);
+      background: var(--orange-faint);
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+    }
+
+    .internal {
+      border-left-color: var(--teal);
+      background: rgba(8,145,178,0.08);
+    }
+
+    .motto strong, .internal strong { color: var(--text); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .card {
+      grid-column: span 12;
+      background: var(--paper);
+      border: 1px solid rgba(8,145,178,0.14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.15rem 1.1rem 1.2rem;
+    }
+
+    @media (min-width: 860px) {
+      .card.span-6 { grid-column: span 6; }
+      .card.span-4 { grid-column: span 4; }
+      .motto-wrap { grid-template-columns: 1fr 1fr; }
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      margin-bottom: 0.35rem;
+      color: var(--teal-dark);
+    }
+
+    h3 {
+      font-size: 0.98rem;
+      margin-bottom: 0.55rem;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    p + p { margin-top: 0.75rem; }
+
+    .small { font-size: 0.92rem; color: var(--muted); }
+    .muted { color: var(--muted); }
+
+    ul {
+      margin-top: 0.7rem;
+      padding-left: 1.15rem;
+    }
+
+    li + li { margin-top: 0.4rem; }
+
+    a {
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(8,145,178,0.25);
+    }
+
+    a:hover { border-bottom-color: var(--teal); }
+
+    .link-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0.5rem;
+    }
+
+    .link-list li {
+      padding: 0.7rem 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .link-list li:first-child { border-top: none; }
+
+    .path {
+      display: block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-top: 0.22rem;
+    }
+
+    .status {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-radius: 999px;
+      padding: 0.28rem 0.55rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .status.canon {
+      background: rgba(8,145,178,0.10);
+      color: var(--teal-dark);
+      border: 1px solid rgba(8,145,178,0.18);
+    }
+
+    .status.support {
+      background: rgba(249,115,22,0.10);
+      color: #9A4B12;
+      border: 1px solid rgba(249,115,22,0.18);
+    }
+
+    .status.public {
+      background: rgba(6,106,132,0.08);
+      color: var(--teal-dark);
+      border: 1px solid rgba(6,106,132,0.15);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .pill {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(8,145,178,0.08);
+      border: 1px solid rgba(8,145,178,0.14);
+      color: var(--teal-dark);
+    }
+
+    footer {
+      margin-top: 1.4rem;
+      padding: 1.2rem 0 0;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .seal {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Administrative Hub</div>
+      <h1>Reprise, Not Crisis Ltd.</h1>
+      <div class="subtitle">Temporary Office of Pattern Affairs</div>
+      <p class="lede">
+        A slightly ceremonial project hub for <em>Ideasthesia as Geometry</em>, its public-facing pages,
+        and the support documents that prevent future re-entry from becoming an interpretive expedition.
+      </p>
+      <div class="motto-wrap">
+        <div class="motto">
+          <strong>Public motto:</strong><br />
+          No territory claimed. Only patterns noticed.
+        </div>
+        <div class="internal">
+          <strong>Internal doctrine:</strong><br />
+          If it can be aligned, it need not become a crisis.
+        </div>
+      </div>
+      <div class="pill-row">
+        <span class="pill">Interpretability</span>
+        <span class="pill">Editorial Alignment</span>
+        <span class="pill">Conceptual Triage</span>
+        <span class="pill">Mild Ontological Stabilisation</span>
+      </div>
+      <div class="seal">Issued under the improbable but effective authority of the Temporary Office of Pattern Affairs.</div>
+    </section>
+
+    <section class="grid">
+      <article class="card span-6">
+        <span class="status canon">Canon</span>
+        <h2>Canonical Materials</h2>
+        <p class="small">These define the current theory, implementation logic, and schema-integrity rules.</p>
+        <ul class="link-list">
+          <li>
+            <a href="ideasthesia_as_geometry_v05.md">Ideasthesia as Geometry — v0.5</a>
+            <span class="path">ideasthesia_as_geometry_v05.md</span>
+          </li>
+          <li>
+            <a href="emotion_field_visualisation_spec_v2.md">Emotion Field Visualisation Spec — v2</a>
+            <span class="path">emotion_field_visualisation_spec_v2.md</span>
+          </li>
+          <li>
+            <a href="experiment_prompt_fresh.md">Fresh Experiment Prompt &amp; Handout — v0.5.1</a>
+            <span class="path">experiment_prompt_fresh.md</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card span-6">
+        <span class="status public">Public Pages</span>
+        <h2>Public-Facing Pages</h2>
+        <p class="small">The currently updated derived layer: public paper page and interactive network page.</p>
+        <ul class="link-list">
+          <li>
+            <a href="ideasthesia_geometry.html">Ideasthesia as Geometry</a>
+            <span class="path">ideasthesia_geometry.html</span>
+          </li>
+          <li>
+            <a href="emotion-network.html">Emotion Network</a>
+            <span class="path">emotion-network.html</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card span-4">
+        <span class="status support">Support</span>
+        <h2>State</h2>
+        <p class="small">Start here to remember where the project currently stands.</p>
+        <ul class="link-list">
+          <li>
+            <a href="comparative_audit_memo.md">Comparative Audit Memo</a>
+            <span class="path">comparative_audit_memo.md</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card span-4">
+        <span class="status support">Support</span>
+        <h2>Decision</h2>
+        <p class="small">Consult before reopening anything that merely feels unresolved because it has become annoying again.</p>
+        <ul class="link-list">
+          <li>
+            <a href="decision_ledger.md">Decision Ledger</a>
+            <span class="path">decision_ledger.md</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card span-4">
+        <span class="status support">Support</span>
+        <h2>Action</h2>
+        <p class="small">The practical work plan for the next sensible edits or alignment passes.</p>
+        <ul class="link-list">
+          <li>
+            <a href="editorial_alignment_handout.md">Editorial Alignment Handout</a>
+            <span class="path">editorial_alignment_handout.md</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card span-6">
+        <h2>Recommended Re-entry Order</h2>
+        <p class="small">If returning after time away, proceed in the following order:</p>
+        <ul>
+          <li><strong>State:</strong> read <code>comparative_audit_memo.md</code>.</li>
+          <li><strong>Decision:</strong> read <code>decision_ledger.md</code>.</li>
+          <li><strong>Action:</strong> read <code>editorial_alignment_handout.md</code>.</li>
+          <li><strong>Then:</strong> reopen the canon and the public pages only after orientation has been restored.</li>
+        </ul>
+      </article>
+
+      <article class="card span-6">
+        <h2>Corporate Mission, Briefly</h2>
+        <p>
+          Reprise, Not Crisis Ltd. exists for the orderly handling of theoretically interesting situations,
+          editorially overgrown projects, canon/legacy disentanglement, and moments in which a body of work
+          has begun speaking in multiple dialects at once.
+        </p>
+        <p class="small">
+          The company recognises that not every alarming circumstance constitutes a crisis. Reprise remains available in most cases.
+        </p>
+      </article>
+    </section>
+
+    <footer>
+      <p>
+        <strong>Reprise, Not Crisis Ltd.</strong> — Temporary Office of Pattern Affairs<br />
+        Interpretability · Editorial Alignment · Conceptual Triage<br />
+        Reprise, not crisis.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

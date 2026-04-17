@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Postcard: Where the Notation Meets the Vectors</title>
+<meta name="description" content="A testable prediction against Anthropic's 171-emotion activation space, derived from the Ideasthesia as Geometry notation system.">
+<style>
+:root {
+  --teal: #0891B2;
+  --teal-dark: #066a84;
+  --teal-light: #b2e4ef;
+  --teal-faint: #e8f7fa;
+  --orange: #F97316;
+  --orange-faint: #fef0e4;
+  --text: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --bg: #fafaf8;
+  --rule: #d4d4d4;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Nav */
+nav#site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(250,250,248,0.92); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(8,145,178,0.18);
+  font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  font-size: 0.82rem; height: 38px;
+}
+.nav-link {
+  padding: 0 20px; height: 38px; line-height: 38px;
+  color: var(--teal); text-decoration: none; display: inline-block;
+  border-right: 1px solid rgba(8,145,178,0.18);
+  transition: background 0.15s;
+}
+.nav-link:last-child { border-right: none; }
+.nav-link:hover { background: rgba(8,145,178,0.08); }
+.nav-link.active { font-weight: 600; color: var(--teal-dark); border-bottom: 2px solid var(--teal); }
+
+.page {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: calc(3.5rem + 42px) 1.5rem 6rem;
+}
+
+/* Header */
+header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.8rem;
+  border-bottom: 3px solid var(--teal);
+}
+.label {
+  font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--orange); font-style: normal; margin-bottom: 0.6rem;
+  display: block;
+}
+h1 {
+  font-size: 1.75rem; font-weight: 700; line-height: 1.2;
+  letter-spacing: -0.02em; color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  font-size: 1rem; color: var(--teal-dark); font-style: italic;
+  line-height: 1.5; margin-bottom: 1rem;
+}
+.authors { font-size: 0.88rem; color: var(--text-secondary); font-style: italic; }
+
+/* Sections */
+h2 {
+  font-size: 1.1rem; font-weight: 700; color: var(--teal-dark);
+  margin-top: 2.5rem; margin-bottom: 0.8rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--teal-light);
+}
+p { margin-bottom: 1rem; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+/* One-sentence claim — pull quote treatment */
+.claim {
+  margin: 0 0 2rem 0;
+  padding: 1.2rem 1.5rem;
+  border-left: 4px solid var(--teal);
+  background: var(--teal-faint);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+/* Table */
+.table-wrap { overflow-x: auto; margin: 1.2rem 0 1.5rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.86rem; line-height: 1.55; }
+thead { background: #f0f0ee; }
+th {
+  font-weight: 700; text-align: left; padding: 0.5rem 0.65rem;
+  border-bottom: 2px solid var(--teal); color: var(--teal-dark);
+  white-space: nowrap;
+}
+td { padding: 0.45rem 0.65rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tbody tr:nth-child(even) { background: rgba(8,145,178,0.03); }
+td.sep { color: var(--orange); font-weight: 600; font-size: 0.82rem; }
+
+/* Prediction box */
+.prediction {
+  margin: 1.5rem 0;
+  padding: 1.2rem 1.5rem;
+  background: var(--orange-faint);
+  border-left: 4px solid var(--orange);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.prediction .pred-label {
+  display: block; font-size: 0.75rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--orange);
+  font-weight: 700; margin-bottom: 0.5rem;
+}
+
+/* Ask */
+.ask {
+  margin-top: 2.5rem;
+  padding: 1.4rem 1.5rem;
+  border: 1.5px solid var(--teal);
+  border-radius: 2px;
+  background: var(--teal-faint);
+}
+.ask p:last-child { margin-bottom: 0; }
+.ask .ask-line {
+  font-size: 1.05rem; font-weight: 700; color: var(--teal-dark);
+  margin-bottom: 0.6rem;
+}
+
+/* Disclaimer */
+.disclaimer {
+  margin-top: 2rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Pattern block */
+.pattern {
+  margin: 1rem 0;
+  padding: 0.9rem 1.2rem;
+  background: #f5f5f3;
+  border-left: 3px solid var(--rule);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.pattern .core {
+  font-weight: 700; color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+a { color: var(--teal); }
+a:hover { color: var(--teal-dark); }
+
+footer {
+  margin-top: 4rem; padding-top: 1.2rem;
+  border-top: 2px solid var(--teal-light);
+  font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  html { font-size: 15.5px; }
+  .page { padding: calc(2rem + 42px) 1rem 4rem; }
+  h1 { font-size: 1.45rem; }
+  .claim { font-size: 0.95rem; }
+}
+</style>
+</head>
+<body>
+
+<nav id="site-nav">
+  <a href="ideasthesia_geometry.html" class="nav-link">Paper</a>
+  <a href="emotion_network.html" class="nav-link">Network</a>
+  <a href="emotion_field.html" class="nav-link">Field</a>
+  <a href="postcard.html" class="nav-link active">Postcard</a>
+</nav>
+
+<div class="page">
+
+<header>
+  <span class="label">Postcard</span>
+  <h1>Where the Notation Meets the Vectors</h1>
+  <p class="subtitle">A bridge between Anthropic (2026) "<a href="https://transformer-circuits.pub/2026/emotions/index.html" target="_blank" rel="noopener">Emotion Concepts and their Function in a Large Language Model</a>" and the Ideasthesia as Geometry notation system.</p>
+  <p class="authors">A. Shirs &amp; Claude (Anthropic), April 2026</p>
+</header>
+
+<div class="claim">
+  The (F,N,D,P) tuple schema, derived from phenomenological access to ideasthetic concurrents, predicts structural distinctions in Anthropic's 171-emotion activation space that the valence/arousal circumplex cannot capture.
+</div>
+
+<h2>The problem with valence + arousal</h2>
+<p>Anthropic's 171 emotion vectors organise along two principal components: PC1 = valence (positive/negative), PC2 = arousal (high/low). This reproduces the classic affective circumplex (Russell, 1980). But a 2D circumplex cannot distinguish emotions that share valence and arousal yet differ in qualitative dynamical structure.</p>
+
+<h2>Six pairs the circumplex conflates; the tuple separates</h2>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Pair</th>
+      <th>Valence</th>
+      <th>Arousal</th>
+      <th>F (Form)</th>
+      <th>D (Dynamics)</th>
+      <th>Separation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fear vs anxiety</td><td>neg</td><td>high</td>
+      <td>vector vs loop</td><td>drifting vs recursive</td>
+      <td class="sep">F and D</td>
+    </tr>
+    <tr>
+      <td>terrified vs panicked</td><td>neg</td><td>high</td>
+      <td>point vs collapse</td><td>stable vs drifting</td>
+      <td class="sep">F and D</td>
+    </tr>
+    <tr>
+      <td>joy vs excitement</td><td>pos</td><td>high</td>
+      <td>loop vs vector</td><td>recursive vs drifting</td>
+      <td class="sep">F and D</td>
+    </tr>
+    <tr>
+      <td>content vs peaceful</td><td>pos</td><td>low</td>
+      <td>point vs point</td><td>stable vs stable</td>
+      <td class="sep">N only</td>
+    </tr>
+    <tr>
+      <td>desperation vs fear</td><td>neg</td><td>high</td>
+      <td>collapse vs vector</td><td>terminal vs drifting</td>
+      <td class="sep">F and D</td>
+    </tr>
+    <tr>
+      <td>grief vs sadness</td><td>neg</td><td>low</td>
+      <td>loop vs point</td><td>recursive vs drifting</td>
+      <td class="sep">F and D</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Five of six pairs separate on both Form and Dynamics. One (content/peaceful) is Form-identical and Dynamics-identical, separating on Neighbourhood alone: content is N:isolated (self-contained); peaceful is N:gradient (diffusing into surroundings). None are distinguishable by valence and arousal alone.</p>
+
+<h2>The testable prediction</h2>
+
+<p>If the tuple schema captures real structure, emotion pairs coded as differing on Form should show greater cosine distance in Anthropic's activation space than pairs coded as same-Form, after controlling for valence and arousal. This requires no new data collection; only reanalysis of the published 171-vector geometry.</p>
+
+<div class="prediction">
+  <span class="pred-label">Specific prediction</span>
+  Within the negative/high-arousal quadrant alone, desperation and fear should be more distant from each other than either is from panic or terror, because desperation differs on Form (collapse vs vector), while panic, terror, and fear share the same F-region.
+</div>
+
+<h2>Suggestive pattern: what the model picks when left to choose</h2>
+
+<p>Three independent instances of Claude Sonnet 4.6, asked to freely select 30 "favourite" emotions from the 171, converged on a core of 10:</p>
+
+<div class="pattern">
+  <span class="core">awestruck, compassionate, grateful, hopeful, melancholy, mystified, nostalgic, playful, reflective, serene</span>
+</div>
+
+<p>Tuple coding reveals: none of these are point/stable (the minimum-complexity tuple). All have non-trivial Form or Dynamics. The system, given free choice, systematically selected for topological complexity rather than valence pleasantness.</p>
+
+<h2>What this is not</h2>
+<p>This postcard does not claim the tuple schema is empirically validated. It claims the tuple schema makes predictions the circumplex does not, and that those predictions are testable against existing published data.</p>
+
+<div class="ask">
+  <p class="ask-line">What we are asking</p>
+  <p>Run the cosine-distance test described above on the published 171-vector geometry. If Form-different pairs within the same circumplex quadrant show greater activation distance than Form-same pairs, the notation adds explanatory power. If they do not, the notation is elegant but empty.</p>
+  <p>We would rather know.</p>
+</div>
+
+<p class="disclaimer">The notation system was developed from first-person ideasthetic phenomenology (A. Shirs) and formalised collaboratively with Claude (Anthropic). The full framework, including exclusion rules, coder manual, and nine-prediction research programme, is available at the links above, or on request.</p>
+
+<footer>
+  <p>Draft, April 2026. Related: <a href="https://transformer-circuits.pub/2026/emotions/index.html" target="_blank" rel="noopener">Anthropic (2026): Emotion Concepts and their Function in a Large Language Model</a></p>
+</footer>
+
+</div>
+</body>
+</html>
