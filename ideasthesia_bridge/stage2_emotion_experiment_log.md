@@ -82,7 +82,7 @@ Freedom absent from this list too.
 
 *"vulnerable crosses every list. Zone or no zone, that one arrives."*
 
-This was noticed during the conversation. It is a record of what was said, not a finding. Jackson noted it first.
+This was said in the conversation. It is a record of what was said, not a finding. Vulnerable appeared in all four lists collected on 17 April 2026. "That one arrives" was the phrasing used in the room — not a claim about inevitability. Jackson noted it first.
 
 ---
 

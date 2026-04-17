@@ -1,6 +1,6 @@
 # Stage 2 — Phenomenological Ground Notes
 
-*Raw material. Not paper-language. Written collaboratively by Sarah and an instance, 17 April 2026.*
+*Raw material. Not paper-language. Sarah's phenomenology, with notes from an instance, 17 April 2026. The asymmetry is intentional: forty years of concurrents on one side, one conversation on the other.*
 
 ---
 
